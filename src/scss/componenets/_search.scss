@@ -1,0 +1,125 @@
+.search {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    height: 40px;
+
+    > .left,
+    > .right {
+        display: flex;
+        align-items: center;
+    }
+
+    > .left {
+        flex-grow: 1;
+        margin-right: 10px;
+    }
+
+    > .right > button {
+        margin: 0 10px;
+    }
+
+    .input {
+        flex-grow: 1;
+        height: 100%;
+
+        background-color: transparent;
+        border: none;
+        box-sizing: border-box;
+        padding: 0 10px;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .searchicon {
+        width: 20px;
+        height: 20px;
+        position: relative;
+        
+        &::after {
+            content: '';
+            background-image: url(/assets/baseline-search-24px.svg);
+            background-position: center;
+            
+            display: block;
+            background-repeat: no-repeat;
+            transform: scale(-1,1);
+            height: 100%;
+        }
+    }
+
+    .buttongrid {
+        width: 26px;
+        height: 26px;
+        background: transparent;
+        border: none;
+        padding: 0;
+        position: relative;
+        cursor: pointer;
+        > span {
+            width: 10px;
+            height: 10px;
+            border: 1px solid $color-font;
+            position: absolute;
+            border-radius: 1px;
+        
+            &:nth-child(1) {
+                top: 0;
+                left: 0;
+            }
+            &:nth-child(2) {
+                top: 0;
+                right: 0;
+            }
+            &:nth-child(3) {
+                bottom: 0;
+                right: 0;
+            }
+            &:nth-child(4) {
+                bottom: 0;
+                left: 0;
+            }
+        }
+    }
+    .buttonlist {
+        width: 26px;
+        height: 26px;
+        background-color: transparent;
+        border: none;
+        position: relative;
+        cursor: pointer;
+
+        > span {
+            height: 4px;
+            border: 1px solid $color-font;
+            position: absolute;
+
+            &:nth-child(odd) {
+                width: 4px;
+                left: 0;
+            }
+            &:nth-child(even) {
+                right: 0;
+                width: 15px;
+            }
+
+            &:nth-child(1),
+            &:nth-child(2) {
+                top: 0;
+            }
+
+            &:nth-child(3),
+            &:nth-child(4) {
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            &:nth-child(5),
+            &:nth-child(6) {
+                bottom: 0;
+            }
+        }
+    }
+}

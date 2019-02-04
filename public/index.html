@@ -6,10 +6,143 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+
+    <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
-    <h1>Hello</h1>
+
+
+    <header class="header">
+        <div class="container">
+            <h1 class="title">Link Shortener</h1>
+        </div>
+    </header>
+
+    <div class="create">
+        <div class="container">
+            <h2 class="title">Simplify your links</h2>
+            <div class="row">
+                <input type="text" placeholder="Your original URL here" class="input">
+                <button class='button'>SHORTEN URL</button>
+            </div>
+            <p class="paragraph">Some helpful comment</p>
+        </div>
+
+    </div>
+
+    <div class="container">
+        <div class="search">
+            <div class="left">
+                <div class="searchicon"></div>
+                <input type="text" placeholder="Filter" class="input">
+            </div>
+            <div class="right">
+                <button class="buttongrid">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <button class="buttonlist">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="list">
+            <ul class="table">
+                <li class="row">
+                    <ul class="rowlist-title">
+                        <li class="rowcol">Name</li>
+                        <li class="rowcol">Link</li>
+                        <li class="rowcol">Date</li>
+                        <li class="rowcol">Visits</li>
+                        <li class="rowcol"></li>
+                    </ul>
+                </li>
+                <li class="row">
+                    <ul class="rowlist">
+                        <li class="rowcol">label</li>
+                        <li class="rowcol icon">
+                            <img src="https://github.com/favicon.ico" alt="">
+                            <a href='https://github.com/callumm1999'>https://github.com/callumm1999</a>
+                        </li>
+                        <li class="rowcol">12.08.19</li>
+                        <li class="rowcol">0</li>
+                        <li class="rowcol">
+                            <button class="options">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                        </li>
+                    </ul>
+                </li>
+                <li class="row">
+                    <ul class="rowlist">
+                        <li class="rowcol">label</li>
+                        <li class="rowcol icon">
+                            <img src="/assets/defaultIcon.png" alt="">
+                            <a href="https://github.com/callumm1999">https://github.com/callumm1999</a>
+                        </li>
+                        <li class="rowcol">12.08.19</li>
+                        <li class="rowcol">0</li>
+                        <li class="rowcol">
+                            <button class="options">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                        </li>
+                    </ul>
+                </li>
+                <li class="row">
+                    <ul class="rowlist">
+                        <li class="rowcol">label</li>
+                        <li class="rowcol icon">
+                            <img src="https://github.com/favicon.ico" alt="">
+                            <a href="https://github.com/callumm1999">https://github.com/callumm1999</a>
+                        </li>
+                        <li class="rowcol">12.08.19</li>
+                        <li class="rowcol">0</li>
+                        <li class="rowcol">
+                            <button class="options">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="controls">
+                <button class="button-previous">Previous</button>
+                <button class="button-next">Next</button>
+            </div>
+
+            <div class="description">
+                Showing 1-6 of 8 total items
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>some footer</p>
+    </div>
+
+    <!-- <p><a href="http://documentation.commvault.com/commvault/v11_sp8/images/data_cube/analytics_dashboard.png">link</a></p> -->
+    <!-- <p><a href="https://codepen.io/Reklino/pen/KwqwXP">link</a></p> -->
+
+
+
+    <script src="js/bundle.js"></script>
 </body>
 
 </html>

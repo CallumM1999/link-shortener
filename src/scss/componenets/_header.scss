@@ -1,0 +1,21 @@
+.header {
+    height: 100px;
+    background-color: $color-primary;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .container {
+        max-width: 1000px;
+    }
+
+    .title {
+        font-weight: 100;
+        font-size: 38px;
+        text-transform: uppercase;
+        letter-spacing: 5px;
+        color: white;
+    }
+
+}
