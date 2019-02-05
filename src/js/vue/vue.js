@@ -1,5 +1,8 @@
+import listContainer from './components/list';
+
 new Vue({
     el: '#app',
+    components: { listContainer },
     data: {
         links: [
             {
@@ -111,6 +114,7 @@ new Vue({
         filter: '',
         nextIndex: 0,
 
+        loading: true,
 
 
         listDisplayList: true,
@@ -121,6 +125,12 @@ new Vue({
 
         this.filteredLinks = this.links;
         this.visibleLinks = this.filteredLinks.slice(0, 6)
+
+
+
+        setTimeout(() => {
+            this.loading = false;
+        }, 3000);
     },
     watch: {
         filter() {
