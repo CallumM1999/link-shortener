@@ -113,7 +113,7 @@ new Vue({
 
 
 
-        listDisplayList: false,
+        listDisplayList: true,
 
     },
     mounted() {

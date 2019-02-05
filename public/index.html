@@ -88,8 +88,8 @@
                 </ul>
 
                 <div class="controls">
-                    <button class="button-previous" @click='handlePrevious'>Previous</button>
-                    <button class="button-next" @click='handleNext'>Next</button>
+                    <button class="button-previous" @click='handlePrevious' v-bind:class='{active: nextIndex > 0}'>Previous</button>
+                    <button class="button-next" @click='handleNext' v-bind:class='{active: filteredLinks.length - ((nextIndex + 1) * 6) > 0}'>Next</button>
                 </div>
 
                 <div class="description">

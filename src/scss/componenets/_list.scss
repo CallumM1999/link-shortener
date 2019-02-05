@@ -92,6 +92,11 @@
         color: $color-secondary;;
         background-color: transparent;
         cursor: pointer;
+
+        &.active {
+            color: $color-primary;
+            border-color: $color-primary;
+        }
     }
 
     .button-previous {
