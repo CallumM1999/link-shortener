@@ -38,13 +38,13 @@
                     <input type="text" placeholder="Filter" class="input" v-model='filter'>
                 </div>
                 <div class="right">
-                    <button class="buttongrid">
+                    <button class="buttongrid" v-bind:class='{selected: !listDisplayList}' @click='toggleListDisplayOption'>
                         <span></span>
                         <span></span>
                         <span></span>
                         <span></span>
                     </button>
-                    <button class="buttonlist">
+                    <button class="buttonlist" v-bind:class='{selected: listDisplayList}' @click='toggleListDisplayOption'>
                         <span></span>
                         <span></span>
                         <span></span>
@@ -55,9 +55,9 @@
                 </div>
             </div>
 
-            <div class="list">
+            <div class="list" v-bind:class='{displayGrid: !listDisplayList}'>
                 <ul class="table">
-                    <li class="row">
+                    <li class="row title">
                         <ul class="rowlist-title">
                             <li class="rowcol">Name</li>
                             <li class="rowcol">Alias</li>
@@ -68,15 +68,15 @@
                     </li>
                     <li class="row" v-for='link in visibleLinks'>
                         <ul class="rowlist">
-                            <li class="rowcol">{{link.label}}</li>
-                            <li class="rowcol">{{link.link}}</li>
+                            <li class="rowcol label">{{link.label}}</li>
+                            <li class="rowcol link">{{link.link}}</li>
 
                             <li class="rowcol icon">
-                                <img :src='link.icon' alt="">
-                                <a :href='link.fullLink'>{{link.fullLink}}</a>
+                                <img :src='link.icon' alt="" class="icon">
+                                <a :href='link.fullLink' class="fullLink">{{link.fullLink}}</a>
                             </li>
-                            <li class="rowcol">{{link.visits}}</li>
-                            <li class="rowcol">
+                            <li class="rowcol visits">{{link.visits}}</li>
+                            <li class="rowcol options">
                                 <button class="options">
                                     <span></span>
                                     <span></span>

@@ -109,7 +109,11 @@ new Vue({
         filteredLinks: [],
         visibleLinks: [],
         filter: '',
-        nextIndex: 0
+        nextIndex: 0,
+
+
+
+        listDisplayList: false,
 
     },
     mounted() {
@@ -143,6 +147,9 @@ new Vue({
             if (this.nextIndex > 0) {
                 this.nextIndex--;
             }
+        },
+        toggleListDisplayOption() {
+            this.listDisplayList = !this.listDisplayList;
         }
     }
 })

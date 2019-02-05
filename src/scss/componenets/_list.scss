@@ -122,4 +122,76 @@
         margin-top: 20px;
         color: $color-font;
     }
+
+
+    // Grid
+
+    &.displayGrid {
+        border: none;
+        background-color: transparent;
+
+        .table {
+            display: flex;
+            flex-wrap: wrap;
+            height: auto;
+            justify-content: center;
+        }
+
+        .row {
+            &.title { display: none }
+
+            border: 1px solid $color-border;
+            background-color: white;
+            border-radius: 3px;
+            margin: 4px;
+            padding: 16px;
+            min-height: 200px;
+            flex-shrink: 1;
+            flex-grow: 1;
+            max-width: 300px;
+            width: 200px;
+        }
+
+        .rowlist {
+            height: 100%;
+            width: 100%;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .rowcol {
+            display: block;
+            width: 100% !important;
+            height: auto ;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &.icon {
+                order: -1;
+
+                .fullLink { display: none }
+
+                .icon {
+                    width: 50px;
+                    height: 50px;
+                }
+            }
+
+            &.options {
+                justify-content: flex-end;
+            }
+            &.label {
+                font-size: 32px;
+                color: darken($color: $color-font, $amount: 10%);
+            }
+            &.visits {
+                padding: 6px;
+                border: 1px solid $color-primary;
+                border-radius: 4px;
+                color: darken($color: $color-font, $amount: 10%);
+            }
+        }
+    }
 }
