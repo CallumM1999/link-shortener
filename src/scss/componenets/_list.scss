@@ -8,6 +8,7 @@
     .table {
         margin: 0;
         padding: 0;
+        height: 420px;
     }
 
     .row {
@@ -19,13 +20,14 @@
     }
 
     .rowlist {
-        @extend .table;
+        margin: 0;
+        padding: 0;
         display: flex;
 
         > .rowcol {
-            &:nth-child(1) { width: 24% }
-            &:nth-child(2) { width: 32% }
-            &:nth-child(3) { width: 24% }
+            &:nth-child(1) { width: 18% }
+            &:nth-child(2) { width: 20% }
+            &:nth-child(3) { width: 44% }
             &:nth-child(4) { width: 12% }
             &:nth-child(5) { width: 8% }
         }

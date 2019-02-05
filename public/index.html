@@ -12,134 +12,101 @@
 
 <body>
 
+    <div id="app">
+        <header class="header">
+            <div class="container">
+                <h1 class="title">Link Shortener</h1>
+            </div>
+        </header>
 
-    <header class="header">
+        <div class="create">
+            <div class="container">
+                <h2 class="title">Simplify your links</h2>
+                <div class="row">
+                    <input type="text" placeholder="Your original URL here" class="input">
+                    <button class='button'>SHORTEN URL</button>
+                </div>
+                <p class="paragraph">Some helpful comment</p>
+            </div>
+
+        </div>
+
         <div class="container">
-            <h1 class="title">Link Shortener</h1>
-        </div>
-    </header>
-
-    <div class="create">
-        <div class="container">
-            <h2 class="title">Simplify your links</h2>
-            <div class="row">
-                <input type="text" placeholder="Your original URL here" class="input">
-                <button class='button'>SHORTEN URL</button>
+            <div class="search">
+                <div class="left">
+                    <div class="searchicon"></div>
+                    <input type="text" placeholder="Filter" class="input" v-model='filter'>
+                </div>
+                <div class="right">
+                    <button class="buttongrid">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <button class="buttonlist">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
             </div>
-            <p class="paragraph">Some helpful comment</p>
+
+            <div class="list">
+                <ul class="table">
+                    <li class="row">
+                        <ul class="rowlist-title">
+                            <li class="rowcol">Name</li>
+                            <li class="rowcol">Alias</li>
+                            <li class="rowcol">Link</li>
+                            <li class="rowcol">Visits</li>
+                            <li class="rowcol"></li>
+                        </ul>
+                    </li>
+                    <li class="row" v-for='link in visibleLinks'>
+                        <ul class="rowlist">
+                            <li class="rowcol">{{link.label}}</li>
+                            <li class="rowcol">{{link.link}}</li>
+
+                            <li class="rowcol icon">
+                                <img :src='link.icon' alt="">
+                                <a :href='link.fullLink'>{{link.fullLink}}</a>
+                            </li>
+                            <li class="rowcol">{{link.visits}}</li>
+                            <li class="rowcol">
+                                <button class="options">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </button>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="controls">
+                    <button class="button-previous" @click='handlePrevious'>Previous</button>
+                    <button class="button-next" @click='handleNext'>Next</button>
+                </div>
+
+                <div class="description">
+                    Showing {{(nextIndex*6)+1}} - {{Math.min((nextIndex*6)+6, filteredLinks.length)}} of
+                    {{filteredLinks.length}} total items
+                </div>
+            </div>
         </div>
+
+        <div class="footer">
+            <p>some footer</p>
+        </div>
+
+        <!-- <p><a href="http://documentation.commvault.com/commvault/v11_sp8/images/data_cube/analytics_dashboard.png">link</a></p> -->
+        <!-- <p><a href="https://codepen.io/Reklino/pen/KwqwXP">link</a></p> -->
 
     </div>
-
-    <div class="container">
-        <div class="search">
-            <div class="left">
-                <div class="searchicon"></div>
-                <input type="text" placeholder="Filter" class="input">
-            </div>
-            <div class="right">
-                <button class="buttongrid">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <button class="buttonlist">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-
-        <div class="list">
-            <ul class="table">
-                <li class="row">
-                    <ul class="rowlist-title">
-                        <li class="rowcol">Name</li>
-                        <li class="rowcol">Link</li>
-                        <li class="rowcol">Date</li>
-                        <li class="rowcol">Visits</li>
-                        <li class="rowcol"></li>
-                    </ul>
-                </li>
-                <li class="row">
-                    <ul class="rowlist">
-                        <li class="rowcol">label</li>
-                        <li class="rowcol icon">
-                            <img src="https://github.com/favicon.ico" alt="">
-                            <a href='https://github.com/callumm1999'>https://github.com/callumm1999</a>
-                        </li>
-                        <li class="rowcol">12.08.19</li>
-                        <li class="rowcol">0</li>
-                        <li class="rowcol">
-                            <button class="options">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </button>
-                        </li>
-                    </ul>
-                </li>
-                <li class="row">
-                    <ul class="rowlist">
-                        <li class="rowcol">label</li>
-                        <li class="rowcol icon">
-                            <img src="/assets/defaultIcon.png" alt="">
-                            <a href="https://github.com/callumm1999">https://github.com/callumm1999</a>
-                        </li>
-                        <li class="rowcol">12.08.19</li>
-                        <li class="rowcol">0</li>
-                        <li class="rowcol">
-                            <button class="options">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </button>
-                        </li>
-                    </ul>
-                </li>
-                <li class="row">
-                    <ul class="rowlist">
-                        <li class="rowcol">label</li>
-                        <li class="rowcol icon">
-                            <img src="https://github.com/favicon.ico" alt="">
-                            <a href="https://github.com/callumm1999">https://github.com/callumm1999</a>
-                        </li>
-                        <li class="rowcol">12.08.19</li>
-                        <li class="rowcol">0</li>
-                        <li class="rowcol">
-                            <button class="options">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </button>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-
-            <div class="controls">
-                <button class="button-previous">Previous</button>
-                <button class="button-next">Next</button>
-            </div>
-
-            <div class="description">
-                Showing 1-6 of 8 total items
-            </div>
-        </div>
-    </div>
-
-    <div class="footer">
-        <p>some footer</p>
-    </div>
-
-    <!-- <p><a href="http://documentation.commvault.com/commvault/v11_sp8/images/data_cube/analytics_dashboard.png">link</a></p> -->
-    <!-- <p><a href="https://codepen.io/Reklino/pen/KwqwXP">link</a></p> -->
-
 
 
     <script src="js/bundle.js"></script>
