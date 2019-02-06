@@ -6,9 +6,12 @@ module.exports = () => {
     // required tables ['user']
 
     con.query('SHOW tables;', (err, res) => {
-        const tables = res.map(item => item.Tables_in_linkshortener);
+        const tables = res.map(item => {
+            const key = Object.keys(item);
+            return item[key];
+        });
 
-        console.log('tables', tables)
+        console.log('setup tables:', tables)
 
         if (tables.indexOf('user') === -1) {
             con.query(`CREATE TABLE user (

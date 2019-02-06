@@ -9,7 +9,7 @@ const con = require('./db/connection');
 
 con.connect((err) => {
     if (err) throw err;
-    setupDB();
+    if (!process.env.TESTING) setupDB();
 
     console.log('connected to database');
 })
