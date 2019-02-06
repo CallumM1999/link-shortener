@@ -3,12 +3,15 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const configureSession = require('./session/configureSession');
 const configurePassport = require('./passport/configurePassport');
+const setupDB = require('./db/setupDB');
 
 const con = require('./db/connection');
 
 con.connect((err) => {
     if (err) throw err;
-    console.log('connected to database')
+    setupDB();
+
+    console.log('connected to database');
 })
 
 const app = express();
@@ -29,4 +32,6 @@ app.use('/assets/', express.static('public/assets'));
 app.use(require('./routes/pages'));
 app.use(require('./routes/authentication'));
 
-app.listen(PORT, () => console.log('Server running on port', PORT))
+app.listen(PORT, () => console.log('Server running on port', PORT));
+
+module.exports = { app };
