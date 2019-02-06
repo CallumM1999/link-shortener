@@ -3,7 +3,13 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const configureSession = require('./session/configureSession');
 const configurePassport = require('./passport/configurePassport');
-// const session = require('express-session');
+
+const con = require('./db/connection');
+
+con.connect((err) => {
+    if (err) throw err;
+    console.log('connected to database')
+})
 
 const app = express();
 const PORT = process.env.PORT || 3000;
