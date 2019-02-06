@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Login page</h1>
+
+
+
+    <form id="form">
+        <input type="text" placeholder="email" name="email">
+        <input type="text" placeholder="password" name="password">
+
+
+
+        <input type="submit" value="login">
+
+    </form>
+
+    <script>
+        const form = document.querySelector('#form');
+
+        console.log('form', form)
+
+        const handleLogin = e => {
+            console.log('login');
+
+            console.log('email', e.target.email.value)
+
+
+            e.preventDefault();
+
+
+            fetch('login', {
+                method: 'post',
+                body: JSON.stringify({
+                    email: e.target.email.value,
+                    password: e.target.password.value
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                    // "Content-Type": "application/x-www-form-urlencoded",
+                },
+            }).then(res => {
+                if (res.status === 200) {
+                    window.location = '/';
+                } else {
+                    alert('error logging in, check console');
+                    console.log(res)
+                }
+            })
+        }
+
+        form.addEventListener('submit', handleLogin)
+    </script>
+</body>
+
+</html>
