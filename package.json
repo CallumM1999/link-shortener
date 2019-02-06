@@ -17,7 +17,7 @@
         "build": "webpack",
         "dev-server": "webpack-dev-server --dev",
         "start": "node server/server.js",
-        "postinstall": "yarn build"
+        "postinstall": "webpack"
     },
     "devDependencies": {
         "css-loader": "^2.1.0",
