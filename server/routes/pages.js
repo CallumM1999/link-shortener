@@ -18,6 +18,11 @@ router.get('/register', (req, res) => {
     res.status(200).sendFile(path.join(publicPath, 'register.html'));
 })
 
+router.get('/preview', (req, res) => {
+    res.status(200).sendFile(path.join(publicPath, 'index.html'));
+})
+
+
 router.get('*', (req, res) => {
     res.status(404).sendFile(path.join(publicPath, '404.html'));
 })
