@@ -12,6 +12,7 @@
         "mysql": "^2.16.0",
         "passport": "^0.4.0",
         "passport-local": "^1.0.0",
+        "validator": "^10.11.0",
         "vue": "^2.5.22"
     },
     "scripts": {
