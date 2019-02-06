@@ -1,9 +1,4 @@
 export default Vue.component('listContainer', {
-    data: function () {
-        return {
-            age: 18
-        }
-    },
     props: ['list', 'loading'],
     template: `
         <ul class="table">
