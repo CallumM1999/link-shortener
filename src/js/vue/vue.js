@@ -119,6 +119,8 @@ new Vue({
 
         listDisplayList: true,
 
+        linkInput: ''
+
     },
     mounted() {
         console.log('vue mounted')
@@ -160,6 +162,28 @@ new Vue({
         },
         toggleListDisplayOption() {
             this.listDisplayList = !this.listDisplayList;
+        },
+        addLink() {
+
+            console.log('add link')
+            console.log('add link', this.linkInput);
+
+
+            fetch('/link', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Cache': 'no-cache'
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    link: this.linkInput,
+                    label: 'Amazon XD'
+                })
+            }).then(response => {
+                console.log('fetch response', response)
+            })
         }
     }
 })

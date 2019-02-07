@@ -19,6 +19,7 @@
     },
     "scripts": {
         "build": "webpack",
+        "build-watch": "webpack --watch --dev",
         "dev-server": "webpack-dev-server --dev",
         "start": "node server/server.js",
         "postinstall": "webpack",

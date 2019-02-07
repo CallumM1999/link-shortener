@@ -27,10 +27,10 @@
             <div class="container">
                 <h2 class="title">Simplify your links</h2>
                 <div class="row">
-                    <input type="text" placeholder="Your original URL here" class="input">
-                    <button class='button'>SHORTEN URL</button>
+                    <input type="text" placeholder="Your original URL here" class="input" v-model='linkInput'>
+                    <button class='button' @click='addLink'>SHORTEN URL</button>
                 </div>
-                <p class="paragraph">Some helpful comment</p>
+                <p class="paragraph">Some helpful comment => URL must start with http:// or https://</p>
             </div>
 
         </div>

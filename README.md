@@ -13,3 +13,7 @@ Please visit the heroku link to seee what I have done so far.
 
 
 [Normal Route](https://salty-ravine-62731.herokuapp.com/)
+
+
+## Todo
+* POST /link url is too specific. node-fetch requires absolute URL. Make it more accepting of misformatted urls.
