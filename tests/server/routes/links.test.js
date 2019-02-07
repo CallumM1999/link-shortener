@@ -4,9 +4,9 @@ const bcrypt = require('bcrypt');
 
 process.env.TESTING = true;
 
-const { app } = require('../../server');
+const { app } = require('../../../server/server');
 
-const con = require('../../db/connection');
+const con = require('../../../server/db/connection');
 
 const fetch = require('node-fetch');
 
@@ -46,7 +46,7 @@ describe('POST /link', () => {
             .post('/login')
             .send({ email, password })
             .then(response => {
-          
+
                 cookie = response.header['set-cookie'][0];
 
                 resolve();
@@ -62,7 +62,7 @@ describe('POST /link', () => {
             .set('Cookie', [cookie])
             .then(response => {
                 expect(response.status).toBe(200);
-                
+
                 const query = `SELECT * FROM link WHERE link='${link}';`;
 
                 con.query(query, (err, res) => {
@@ -97,7 +97,7 @@ describe('POST /link', () => {
     it('should 400 (invalid linl)', done => {
         request(app)
             .post('/link')
-            .send({ link: 'ajsdnajsdn',label })
+            .send({ link: 'ajsdnajsdn', label })
             .set('Cookie', [cookie])
             .then(response => {
                 expect(response.status).toBe(400);

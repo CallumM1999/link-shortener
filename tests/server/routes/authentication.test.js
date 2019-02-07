@@ -4,9 +4,9 @@ const bcrypt = require('bcrypt');
 
 process.env.TESTING = true;
 
-const { app } = require('../../server');
+const { app } = require('../../../server/server');
 
-const con = require('../../db/connection');
+const con = require('../../../server/db/connection');
 
 const createUserTable = require('../utils/createUserTable');
 const insertUser = require('../utils/insertUser');

@@ -24,7 +24,7 @@
         "dev-server": "webpack-dev-server --dev",
         "start": "node server/server.js",
         "postinstall": "webpack",
-        "test": "mocha server/**/*.test.js",
+        "test": "mocha tests/**/*.test.js",
         "test-watch": "nodemon --exec 'yarn test'"
     },
     "devDependencies": {
