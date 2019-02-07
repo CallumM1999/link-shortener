@@ -1,11 +1,12 @@
 const session = require('express-session');
 
-module.exports = app => {
+module.exports = (app, sessionStore) => {
     app.use(session({
-        secret: 'keyboard cat',
+        key: 'session_cookie_name',
+        secret: 'session_cookie_secret',
+        store: sessionStore,
         resave: false,
-        saveUninitialized: false,
-        // cookie: { secure: true }
-    }))
+        saveUninitialized: false
+    }));
 
 }

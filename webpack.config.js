@@ -46,7 +46,7 @@ module.exports = (undefined, argv) => {
         },
         devServer: {
             contentBase: path.join(__dirname, 'public'),
-            open: true
+            open: false,
         }
     }
 }
