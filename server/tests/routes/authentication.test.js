@@ -8,30 +8,10 @@ const { app } = require('../../server');
 
 const con = require('../../db/connection');
 
-
-const resetUserTable = () => new Promise((resolve, reject) => {
-    con.query('show tables;', (err, res) => {
-
-        const tables = res.map(item => item[Object.keys(item)]);
-
-        // if table exists, drop it
-        if (tables.indexOf('user') !== -1) con.query('DROP TABLE user');
-
-        // then reinsert the table
-        const query = `
-            CREATE TABLE user (
-            id int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-            email VARCHAR(255),
-            password VARCHAR(255),
-            UNIQUE(email)
-        )`;
-
-        con.query(query, err => {
-            if (err) reject(err);
-            resolve();
-        })
-    })
-});
+const createUserTable = require('../utils/createUserTable');
+const insertUser = require('../utils/insertUser');
+const dropTestDB = require('../utils/dropTestDB');
+const createTestDB = require('../utils/createTestDB');
 
 
 describe('POST /login', () => {
@@ -39,14 +19,17 @@ describe('POST /login', () => {
     const password = 'password1234';
     const hash = bcrypt.hashSync(password, 10);
 
-    before(async () => {
-        // wipe user table
-        // insert new user
+    before(() => new Promise(async resolve => {
+        // reset database
+        await dropTestDB();
+        await createTestDB();
 
-        await resetUserTable();
-        con.query(`INSERT INTO user (email, password) VALUES ('${email}','${hash}');`)
-    });
+        // add user
+        await createUserTable();
+        await insertUser(email, hash);
 
+        resolve();
+    }));
 
     it('should login user', done => {
         request(app)
@@ -106,9 +89,16 @@ describe('POST /register', () => {
     const password = 'password1234';
     const hash = bcrypt.hashSync(password, 10);
 
-    before(async () => {
-        await resetUserTable();
-    });
+    before(() => new Promise(async resolve => {
+        // reset database
+        await dropTestDB();
+        await createTestDB();
+
+        // add user table
+        await createUserTable();
+
+        resolve();
+    }));
 
     it('should 400 (missing email field)', done => {
         request(app)
