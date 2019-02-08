@@ -9,8 +9,11 @@ const { app } = require('../../../server/server');
 const con = require('../../../server/db/connection');
 
 const insertUser = require('../utils/insertUser');
+const insertLink = require('../utils/insertLink');
 const resetUserTable = require('../utils/resetUserTable')
 const resetLinkTable = require('../utils/resetLinkTable')
+
+const login = require('../utils/login');
 
 describe('POST /link', () => {
     const email = 'email@email.com';
@@ -30,16 +33,10 @@ describe('POST /link', () => {
         // create user
         await insertUser(email, hash);
 
-        request(app)
-            .post('/login')
-            .send({ email, password })
-            .then(response => {
+        // login
+        cookie = await login(email, password);
 
-                cookie = response.header['set-cookie'][0];
-
-                resolve();
-            })
-
+        resolve();
     }));
 
 
@@ -114,4 +111,63 @@ describe('POST /link', () => {
                 done();
             })
     })
+})
+
+
+
+describe('GET /link', () => {
+    const email = 'email@email.com';
+    const password = 'password1234';
+    const hash = bcrypt.hashSync(password, 10);
+
+    const fullURL = 'https://github.com/CallumM1999/link-shortener/blob/master/README.md';
+    let userID;
+    const label = 'Github';
+    const iconURL = 'http://github.com/favicon.icon';
+
+    let cookie;
+
+    before(async () => {
+        // reset tables;
+        await resetLinkTable();
+        await resetUserTable();
+
+        // create user
+        const user = await insertUser(email, hash);
+        userID = user.insertId;
+
+        // login
+        cookie = await login(email, password);
+
+        // insert a link
+        await insertLink(fullURL, userID, label, iconURL)
+
+    });
+
+    it('get link', done => {
+        request(app)
+            .get('/link')
+            .set('Cookie', [cookie])
+            .then(response => {
+                expect(response.status).toBe(200);
+
+                const query = `SELECT * FROM link WHERE userID = '${userID}'`;
+
+                con.query(query, (err, links) => {
+                    if (err) done(err);
+
+                    expect(links[0].link).toEqual(fullURL);
+                    expect(links[0].label).toEqual(label)
+                    expect(links[0].icon).toEqual(iconURL);
+
+                    done();
+                })
+
+            }).catch(e => done(e));
+    })
+
+
+
+
+
 })

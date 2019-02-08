@@ -37,9 +37,9 @@
                     </div>
                 </form>
 
-                <div class="response">
+                <div class="response" v-if='createMsg' v-cloak>
                     <p v-bind:class='createMsg.type' v-if='createMsg'>
-                        <span v-if='createMsg.type === "error" || createMsg.type === "success"'>{{createMsg.msg}}</span>
+                        <span v-if='createMsg.type === "error" || createMsg.type === "success"' v-cloak>{{createMsg.msg}}</span>
                         <span v-if='createMsg.type === "loading"'>Loading...</span>
                     </p>
                 </div>
@@ -73,15 +73,49 @@
 
             <div class="list" v-bind:class='{displayGrid: !listDisplayList}'>
 
-                <list-container :list="visibleLinks" :loading='loading'></list-container>
+                <ul class="table">
+                    <div>
+                        <li class="row title">
+                            <ul class="rowlist-title">
+                                <li class="rowcol">Name</li>
+                                <li class="rowcol">Alias</li>
+                                <li class="rowcol">Link</li>
+                                <li class="rowcol">Visits</li>
+                                <li class="rowcol"></li>
+                            </ul>
+                        </li>
 
+                        <div v-cloak>
+                            <li class="row" v-for='link in visibleLinks'>
+                                <ul class="rowlist">
+
+                                    <li class="rowcol label">{{ link.label }}</li>
+                                    <li class="rowcol link">{{ link.url }}</li>
+
+                                    <li class="rowcol icon">
+                                        <img :src='link.icon ? link.icon : "assets/defaultIcon.png"' class="icon">
+                                        <a :href='link.link' class="fullLink">{{ link.link }}</a>
+                                    </li>
+                                    <li class="rowcol visits">{{ link.visits }}</li>
+                                    <li class="rowcol options">
+                                        <button class="options">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </li>
+                        </div>
+                    </div>
+                </ul>
 
                 <div class="controls">
                     <button class="button-previous" @click='handlePrevious' v-bind:class='{active: nextIndex > 0}'>Previous</button>
                     <button class="button-next" @click='handleNext' v-bind:class='{active: filteredLinks.length - ((nextIndex + 1) * 6) > 0}'>Next</button>
                 </div>
 
-                <div class="description">
+                <div class="description" v-cloak>
                     Showing {{(nextIndex*6)+1}} - {{Math.min((nextIndex*6)+6, filteredLinks.length)}} of
                     {{filteredLinks.length}} total items
                 </div>

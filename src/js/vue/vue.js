@@ -1,142 +1,39 @@
-import listContainer from './components/list';
 import isURL from 'validator/lib/isURL';
 
 new Vue({
     el: '#app',
-    components: { listContainer },
-    data: {
-        links: [
-            {
-                label: 'Github',
-                icon: 'https://github.com/favicon.ico',
-                link: 'ab6hddn9',
-                fullLink: 'https://github.com/callumm1999',
-                visits: 2
-            },
-            {
-                label: 'Github',
-                icon: '/assets/defaultIcon.png',
-                link: 'ab6hddn9',
-                fullLink: 'https://github.com/callumm1999',
-                visits: 23
-            },
-            {
-                label: 'Amazon',
-                icon: 'https://amazon.co.uk/favicon.ico',
-                link: 'ab6hddn9',
-                fullLink: 'https://www.amazon.co.uk/',
-                visits: 8
-            },
-            {
-                label: 'Ebay',
-                icon: 'https://www.ebay.co.uk/favicon.ico',
-                link: 'ab6hddn9',
-                fullLink: 'https://www.ebay.co.uk/',
-                visits: 0
-            }, {
-                label: 'Github',
-                icon: 'https://github.com/favicon.ico',
-                link: 'ab6hddn9',
-                fullLink: 'https://github.com/callumm1999',
-                visits: 2
-            },
-            {
-                label: 'Github',
-                icon: '/assets/defaultIcon.png',
-                link: 'ab6hddn9',
-                fullLink: 'https://github.com/callumm1999',
-                visits: 23
-            },
-            {
-                label: 'Amazon',
-                icon: 'https://amazon.co.uk/favicon.ico',
-                link: 'ab6hddn9',
-                fullLink: 'https://www.amazon.co.uk/',
-                visits: 8
-            },
-            {
-                label: 'Ebay',
-                icon: 'https://www.ebay.co.uk/favicon.ico',
-                link: 'ab6hddn9',
-                fullLink: 'https://www.ebay.co.uk/',
-                visits: 0
-            }, {
-                label: 'Github',
-                icon: 'https://github.com/favicon.ico',
-                link: 'ab6hddn9',
-                fullLink: 'https://github.com/callumm1999',
-                visits: 2
-            },
-            {
-                label: 'Github',
-                icon: '/assets/defaultIcon.png',
-                link: 'ab6hddn9',
-                fullLink: 'https://github.com/callumm1999',
-                visits: 23
-            },
-            {
-                label: 'Amazon',
-                icon: 'https://amazon.co.uk/favicon.ico',
-                link: 'ab6hddn9',
-                fullLink: 'https://www.amazon.co.uk/',
-                visits: 8
-            },
-            {
-                label: 'Ebay',
-                icon: 'https://www.ebay.co.uk/favicon.ico',
-                link: 'ab6hddn9',
-                fullLink: 'https://www.ebay.co.uk/',
-                visits: 0
-            },
-            {
-                label: 'Github',
-                icon: '/assets/defaultIcon.png',
-                link: 'ab6hddn9',
-                fullLink: 'https://github.com/callumm1999',
-                visits: 23
-            },
-            {
-                label: 'Amazon',
-                icon: 'https://amazon.co.uk/favicon.ico',
-                link: 'ab6hddn9',
-                fullLink: 'https://www.amazon.co.uk/',
-                visits: 8
-            },
-            {
-                label: 'Ebay',
-                icon: 'https://www.ebay.co.uk/favicon.ico',
-                link: 'ab6hddn9',
-                fullLink: 'https://www.ebay.co.uk/',
-                visits: 0
-            }
-        ],
-        filteredLinks: [],
-        visibleLinks: [],
-        filter: '',
-        nextIndex: 0,
+    data() {
+        return {
+            links: [],
+            filteredLinks: [],
+            visibleLinks: [],
 
-        loading: true,
+            filter: '',
+            nextIndex: 0,
+
+            loading: true,
 
 
-        listDisplayList: true,
+            listDisplayList: true,
 
-        createInputLink: '',
-        createInputLabel: '',
-        // createError: null,
-        createMsg: null, // {type: ('error' or 'success'), msg: 'some message'}
+            createInputLink: '',
+            createInputLabel: '',
+            createMsg: null, // {type: ('error' or 'success'), msg: 'some message'}
+        }
 
     },
     mounted() {
         console.log('vue mounted')
 
-        this.filteredLinks = this.links;
-        this.visibleLinks = this.filteredLinks.slice(0, 6)
+        fetch('/link', { method: 'GET' })
+            .then(response => response.json())
+            .then(response => {
+                // update links array
+                this.links = response;
+                this.updateVisibleLinks()
 
-
-
-        setTimeout(() => {
-            this.loading = false;
-        }, 3000);
+                this.loading = false;
+            })
     },
     watch: {
         filter() {
@@ -149,23 +46,28 @@ new Vue({
 
             this.visibleLinks = this.filteredLinks.slice(0, 6)
         },
-        nextIndex(index) {
-            this.visibleLinks = this.filteredLinks.slice(index * 6, Math.min((index * 6) + 6, this.filteredLinks.length))
-        }
+
     },
     methods: {
         handleNext() {
             if (this.filteredLinks.length - ((this.nextIndex + 1) * 6) > 0) {
                 this.nextIndex++;
+                this.updateVisibleLinks();
             }
         },
         handlePrevious() {
             if (this.nextIndex > 0) {
                 this.nextIndex--;
+                this.updateVisibleLinks();
             }
         },
         toggleListDisplayOption() {
             this.listDisplayList = !this.listDisplayList;
+        },
+        updateVisibleLinks() {
+            this.filteredLinks = this.links;
+            this.visibleLinks = this.filteredLinks.slice(this.nextIndex * 6, Math.min((this.nextIndex * 6) + 6, this.filteredLinks.length))
+
         },
         addLink(e) {
             e.preventDefault();
@@ -209,6 +111,9 @@ new Vue({
 
                     response.json().then(val => {
                         console.log('BODY', val);
+                        this.links.unshift(val);
+                        this.updateVisibleLinks();
+
 
                         // use data to add to list
                     })
