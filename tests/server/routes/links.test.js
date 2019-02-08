@@ -8,14 +8,9 @@ const { app } = require('../../../server/server');
 
 const con = require('../../../server/db/connection');
 
-const fetch = require('node-fetch');
-
-const createUserTable = require('../utils/createUserTable');
 const insertUser = require('../utils/insertUser');
-const dropTestDB = require('../utils/dropTestDB');
-const createTestDB = require('../utils/createTestDB');
-const createLinkTable = require('../utils/createLinkTable');
-
+const resetUserTable = require('../utils/resetUserTable')
+const resetLinkTable = require('../utils/resetLinkTable')
 
 describe('POST /link', () => {
     const email = 'email@email.com';
@@ -28,19 +23,12 @@ describe('POST /link', () => {
     let cookie;
 
     before(() => new Promise(async resolve => {
-        // reset database
-        await dropTestDB();
-        await createTestDB();
+        // reset tables;
+        await resetLinkTable();
+        await resetUserTable();
 
-        // add user table
-        await createUserTable();
         // create user
         await insertUser(email, hash);
-
-        // add link table
-        await createLinkTable();
-
-        // login
 
         request(app)
             .post('/login')
@@ -81,6 +69,17 @@ describe('POST /link', () => {
                 expect(response.status).toBe(400);
                 done();
             })
+    });
+
+    it('should 400 (label too long)', done => {
+        request(app)
+            .post('/link')
+            .send({ link, label: ('a').repeat(31) })
+            .set('Cookie', [cookie])
+            .then(response => {
+                expect(response.status).toBe(400);
+                done();
+            })
     })
 
     it('should 400 (no link)', done => {
@@ -94,10 +93,21 @@ describe('POST /link', () => {
             })
     })
 
-    it('should 400 (invalid linl)', done => {
+    it('should 400 (invalid link)', done => {
         request(app)
             .post('/link')
             .send({ link: 'ajsdnajsdn', label })
+            .set('Cookie', [cookie])
+            .then(response => {
+                expect(response.status).toBe(400);
+                done();
+            })
+    })
+
+    it('should 400 (link without protocol)', done => {
+        request(app)
+            .post('/link')
+            .send({ link: 'google.com', label })
             .set('Cookie', [cookie])
             .then(response => {
                 expect(response.status).toBe(400);

@@ -1,4 +1,5 @@
 import listContainer from './components/list';
+import isURL from 'validator/lib/isURL';
 
 new Vue({
     el: '#app',
@@ -119,7 +120,10 @@ new Vue({
 
         listDisplayList: true,
 
-        linkInput: ''
+        createInputLink: '',
+        createInputLabel: '',
+        // createError: null,
+        createMsg: null, // {type: ('error' or 'success'), msg: 'some message'}
 
     },
     mounted() {
@@ -163,11 +167,23 @@ new Vue({
         toggleListDisplayOption() {
             this.listDisplayList = !this.listDisplayList;
         },
-        addLink() {
+        addLink(e) {
+            e.preventDefault();
 
-            console.log('add link')
-            console.log('add link', this.linkInput);
+            // prevent spam
+            if (this.createMsg && this.createMsg.status === 'loading') return;
 
+            //validate link
+            if (!this.createInputLink.length) return this.createMsg = { type: 'error', msg: 'Please add a link' };
+            if (!isURL(this.createInputLink)) return this.createMsg = { type: 'error', msg: 'Link must be valid' };
+            if (!this.createInputLink.match(/^(http:\/\/)|(https:\/\/)/)) return this.createMsg = { type: 'error', msg: 'Link must start with http:// or https://' };
+
+            // validate label
+            if (!this.createInputLabel.length) return this.createMsg = { type: 'error', msg: 'Please add a label' };
+            if (this.createInputLabel.length > 30) return this.createMsg = { type: 'error', msg: 'Label must be less than 30 characters' };
+
+            // if no errors, send request
+            this.createMsg = { type: 'loading' }
 
             fetch('/link', {
                 method: 'POST',
@@ -178,12 +194,25 @@ new Vue({
                 },
                 credentials: 'include',
                 body: JSON.stringify({
-                    link: this.linkInput,
-                    label: 'Amazon XD'
+                    link: this.createInputLink,
+                    label: this.createInputLabel
                 })
-            }).then(response => {
-                console.log('fetch response', response)
             })
+                .then(response => {
+                    if (response.status !== 200) return this.createMsg = { type: 'error', msg: 'Oops! Something went wrong.' };
+
+                    // success
+                    this.createMsg = { type: 'success', msg: 'Link added!' };
+
+                    this.createInputLabel = '';
+                    this.createInputLink = '';
+
+                    response.json().then(val => {
+                        console.log('BODY', val);
+
+                        // use data to add to list
+                    })
+                })
         }
     }
 })

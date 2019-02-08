@@ -8,10 +8,9 @@ const { app } = require('../../../server/server');
 
 const con = require('../../../server/db/connection');
 
-const createUserTable = require('../utils/createUserTable');
 const insertUser = require('../utils/insertUser');
-const dropTestDB = require('../utils/dropTestDB');
-const createTestDB = require('../utils/createTestDB');
+const resetUserTable = require('../utils/resetUserTable')
+const resetLinkTable = require('../utils/resetLinkTable')
 
 
 describe('POST /login', () => {
@@ -20,12 +19,10 @@ describe('POST /login', () => {
     const hash = bcrypt.hashSync(password, 10);
 
     before(() => new Promise(async resolve => {
-        // reset database
-        await dropTestDB();
-        await createTestDB();
+        // reset user table
+        await resetUserTable();
 
         // add user
-        await createUserTable();
         await insertUser(email, hash);
 
         resolve();
@@ -90,12 +87,9 @@ describe('POST /register', () => {
     const hash = bcrypt.hashSync(password, 10);
 
     before(() => new Promise(async resolve => {
-        // reset database
-        await dropTestDB();
-        await createTestDB();
-
-        // add user table
-        await createUserTable();
+        // reset tables
+        await resetLinkTable();
+        await resetUserTable();
 
         resolve();
     }));

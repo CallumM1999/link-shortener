@@ -1,17 +1,19 @@
-.loading {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-
-    color: $color-font;
-
-    .loadingicon {
-        width: 120px;
-        height: 120px; 
-    }
-
-    .loadingpath {
-        fill: $color-font;
+.list {
+    .loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    
+        color: $color-font;
+    
+        .loadingicon {
+            width: 120px;
+            height: 120px; 
+        }
+    
+        .loadingpath {
+            fill: $color-font;
+        }
     }
 }

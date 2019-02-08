@@ -26,11 +26,23 @@
         <div class="create">
             <div class="container">
                 <h2 class="title">Simplify your links</h2>
-                <div class="row">
-                    <input type="text" placeholder="Your original URL here" class="input" v-model='linkInput'>
-                    <button class='button' @click='addLink'>SHORTEN URL</button>
+                <form @submit='addLink'>
+                    <div class="row">
+                        <input type="text" placeholder="Your original URL here" class="input" v-model='createInputLink'>
+                        <input type="text" placeholder="Label" class="input" v-model='createInputLabel'>
+                    </div>
+
+                    <div class="row">
+                        <button class='button' type='submit'>SHORTEN URL</button>
+                    </div>
+                </form>
+
+                <div class="response">
+                    <p v-bind:class='createMsg.type' v-if='createMsg'>
+                        <span v-if='createMsg.type === "error" || createMsg.type === "success"'>{{createMsg.msg}}</span>
+                        <span v-if='createMsg.type === "loading"'>Loading...</span>
+                    </p>
                 </div>
-                <p class="paragraph">Some helpful comment => URL must start with http:// or https://</p>
             </div>
 
         </div>
