@@ -3,7 +3,7 @@ const con = require('./connection');
 module.exports = () => {
     console.log('checking that database is setup with tables');
 
-    // required tables ['user', 'link']
+    // required tables ['user', 'link', 'log']
 
     con.query('SHOW tables;', (err, res) => {
         const tables = res.map(item => {
@@ -31,6 +31,15 @@ module.exports = () => {
                 userID INT NOT NULL,
                 FOREIGN KEY (userID) REFERENCES user (id) ON DELETE CASCADE
             );`)
+        }
+
+        if (tables.indexOf('log') === -1) {
+            con.query(`CREATE TABLE log (
+                id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                linkID INT(12) NOT NULL,
+                timestamp INT NOT NULL,
+                FOREIGN KEY (linkID) REFERENCES link (id) ON DELETE CASCADE
+                );`)
         }
     })
 }
