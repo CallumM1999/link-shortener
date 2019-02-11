@@ -58,7 +58,7 @@ router.post('/link', authenticationMiddleware, async (req, res) => {
 });
 
 router.get('/link', authenticationMiddleware, async (req, res) => {
-    const query = `SELECT * FROM link WHERE userID = ${req.user} ORDER BY id DESC;`;
+    const query = `SELECT link.*, COUNT(log.linkID) AS visits FROM link LEFT JOIN log ON log.linkID = link.id WHERE link.userID = ${req.user} GROUP BY link.id;`;
 
     con.query(query, (err, links) => {
         if (err) return res.status(400).send();
@@ -68,7 +68,7 @@ router.get('/link', authenticationMiddleware, async (req, res) => {
             link: item.link,
             label: item.label,
             icon: item.icon,
-            visits: 0
+            visits: item.visits
         }));
 
         res.status(200).json(formattedLinks);
@@ -79,13 +79,41 @@ router.get('/link/:encodedUrl', async (req, res) => {
     const { encodedUrl } = req.params;
     const decodedUrl = decodeURL(encodedUrl);
 
-    const query = `SELECT link FROM link WHERE id = ${decodedUrl} LIMIT 1;`;
+    // console.log('request', req.http)
+
+    // console.log('body', req.body)
+
+    const timestamp = Math.floor(Date.now() / 1000);
+
+    console.log('time', timestamp)
+
+    const query = `SELECT link, id FROM link WHERE id = ${decodedUrl} LIMIT 1; `;
 
     con.query(query, (err, output) => {
+        console.log('first query')
         if (err) return status(404).send();
 
-        if (output.length) return res.status(200).redirect(output[0].link)
-        res.status(404).send();
+        if (!output.length) return res.status(404).send();
+
+
+
+        res.status(200).redirect(output[0].link)
+
+        // log request
+
+        const query2 = `INSERT INTO log(linkID, timestamp) VALUES(${output[0].id}, ${timestamp}); `;
+
+        con.query(query2, (err, res) => {
+            console.log('logged')
+
+            if (err) console.log('log err', err);
+
+            console.log('log res', res)
+
+
+
+        })
+
     })
 })
 
