@@ -5,9 +5,14 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = (undefined, argv) => {
     return {
         mode: argv.dev ? 'development' : 'production',
-        entry: path.resolve(__dirname, 'src', 'js', 'app.js'),
+        entry: {
+            style : path.resolve(__dirname, 'src', 'scss', 'main.scss'),
+            main: path.resolve(__dirname, 'src', 'js', 'app.js'),
+            login: path.resolve(__dirname, 'src', 'js', 'login.js'),
+            register: path.resolve(__dirname, 'src', 'js', 'register.js'),
+        },
         output: {
-            filename: 'js/bundle.js',
+            filename: 'js/[name].js',
             path: path.resolve(__dirname, 'public')
         },
         resolve: {
