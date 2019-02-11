@@ -13,6 +13,8 @@ const insertLink = require('../utils/insertLink');
 const resetUserTable = require('../utils/resetUserTable')
 const resetLinkTable = require('../utils/resetLinkTable')
 
+const encodeURL = require('../../../server/utils/encodeURL');
+
 const login = require('../utils/login');
 
 describe('POST /link', () => {
@@ -111,9 +113,7 @@ describe('POST /link', () => {
                 done();
             })
     })
-})
-
-
+});
 
 describe('GET /link', () => {
     const email = 'email@email.com';
@@ -168,6 +168,72 @@ describe('GET /link', () => {
 
 
 
+
+
+});
+
+describe('GET /link/:encodedURL', () => {
+    const email = 'email@email.com';
+    const password = 'password1234';
+    const hash = bcrypt.hashSync(password, 10);
+    let userID;
+
+    const fullURL = 'https://github.com/CallumM1999/link-shortener/blob/master/README.md';
+    const label = 'Github';
+    const iconURL = 'http://github.com/favicon.icon';
+    let linkID;
+    let linkEncodedURL;
+
+    // let cookie;
+
+    before(() => new Promise(async resolve => {
+        // reset tables;
+        await resetLinkTable();
+        await resetUserTable();
+
+        // create user
+        const user = await insertUser(email, hash);
+        userID = user.insertId;
+
+
+        // login
+        // cookie = await login(email, password);
+
+        // insert a link
+        const insertedLink = await insertLink(fullURL, userID, label, iconURL)
+        linkID = insertedLink.insertId;
+
+        linkEncodedURL = encodeURL(linkID);
+
+        resolve();
+    }));
+
+    it('should redirect', done => {
+        request(app)
+            .get(`/link/${linkEncodedURL}`)
+            .then(response => {
+                expect(response.status).toEqual(302); // supertest recieves 302? something to do with redirect
+
+                const query = `SELECT * FROM link WHERE userID = ${userID};`;
+
+                con.query(query, (err, res) => {
+                    if (err) done(err);
+                    expect(res[0].link).toEqual(response.header.location)
+                    expect(res[0].label).toEqual(label);
+                    done();
+                })
+            }).catch(e => done(e));
+    });
+
+    it('should 404 (link doesnt exsist)', done => {
+        request(app)
+            .get(`/link/bbbbbb`)
+            .then(response => {
+                expect(response.status).toEqual(404);
+
+                done();
+            }).catch(e => done(e));
+    });
 
 
 })

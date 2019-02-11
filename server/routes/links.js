@@ -6,11 +6,8 @@ const url = require('url');
 const fetch = require('node-fetch');
 const con = require('../db/connection');
 
-const encodeURL = id => {
-    const map = { 0: 'a', 1: 'b', 2: 'c', 3: 'd', 4: 'e', 5: 'f', 6: 'g', 7: 'h', 8: 'i', 9: 'j', a: 'k', b: 'l', c: 'm', d: 'n', e: 'o', f: 'p', g: 'q', h: 'r', i: 's', j: 't', k: 'u', l: 'v', m: 'w', n: 'x', o: 'y', p: 'z' };
-    const encoded = id.toString(26).split('').map(item => map[item]).join('');
-    return encoded.length < 6 ? encoded + 'a'.repeat(6 - encoded.length) : encoded;
-}
+const encodeURL = require('../utils/encodeURL');
+const decodeURL = require('../utils/decodeURL');
 
 router.post('/link', authenticationMiddleware, async (req, res) => {
     const { link, label } = req.body;
@@ -78,5 +75,18 @@ router.get('/link', authenticationMiddleware, async (req, res) => {
     })
 })
 
+router.get('/link/:encodedUrl', async (req, res) => {
+    const { encodedUrl } = req.params;
+    const decodedUrl = decodeURL(encodedUrl);
+
+    const query = `SELECT link FROM link WHERE id = ${decodedUrl} LIMIT 1;`;
+
+    con.query(query, (err, output) => {
+        if (err) return status(404).send();
+
+        if (output.length) return res.status(200).redirect(output[0].link)
+        res.status(404).send();
+    })
+})
 
 module.exports = router;
