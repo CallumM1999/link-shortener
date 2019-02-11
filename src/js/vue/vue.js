@@ -40,8 +40,10 @@ new Vue({
             this.nextIndex = 0;
             this.filteredLinks = this.links.filter((item) => {
                 const label = item.label.toLowerCase();
+                const link = item.link.replace('https://', '').replace('http://', '').toLowerCase();
+
                 const filter = this.filter.toLowerCase();
-                return label.includes(filter);
+                return label.includes(filter) || link.includes(filter);
             });
 
             this.visibleLinks = this.filteredLinks.slice(0, 6)
