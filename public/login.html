@@ -5,27 +5,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Login</title>
+
+    <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
-    <h1>Login page</h1>
 
+    <div id="app">
+        <page-header></page-header>
 
+        <form class="centeredForm" @submit='handleLogin'>
+            <div class="top">
+                <h2 class="title">Login</h2>
+            </div>
 
-    <form id="form">
-        <input type="text" placeholder="email" name="email">
-        <input type="text" placeholder="password" name="password">
+            <div class="bottom">
+                <div class="row">
+                    <label class="label" for="email">Email</label>
+                    <input class='input' id='email' type="text" v-model='email'>
+                </div>
 
+                <div class="row">
+                    <label class="label" for="password">Password</label>
+                    <input class='input' id="password" type="password" v-model='password'>
+                </div>
 
+                <div class="row">
+                    <p v-cloak v-if='error' class="error">{{error}}</p>
+                    <p v-cloak v-if='loading' class="loading">Loading...</p>
+                    <p v-cloak v-if='success' class="success">Success</p>
+                </div>
 
-        <input type="submit" value="login">
+                <div class="row">
+                    <button type="submit" class="button submit">Login</button>
+                </div>
 
-        <p><a href="/register">Register</a></p>
-    </form>
+                <p><a href="/register" class="link">Register</a></p>
+            </div>
+        </form>
+    </div>
 
     <script src="js/login.js"></script>
-
 </body>
 
 </html>

@@ -52,7 +52,7 @@ router.post('/register', async (req, res) => {
     // ascii characters
 
     const trimmedPassword = validator.trim(password);
-    const match = trimmedPassword.match(/(?=^(.{8,100})$)(?=(.*[0-9].*){2})/);
+    const match = trimmedPassword.match(/(?=^([\x00-\x7F]{8,100})$)(?=[\x00-\x7F]*[0-9][\x00-\x7F]*)(?=[\x00-\x7F]*[A-Z][\x00-\x7F]*)/);
     if (!match) return res.status(401).send();
 
     const passwordHash = await bcyrpt.hash(password, 10);
@@ -66,7 +66,7 @@ router.post('/register', async (req, res) => {
         })
 
     } catch (e) {
-        if (e === 'ER_DUP_ENTRY') return res.status(403).send('email taken');
+        if (e === 'ER_DUP_ENTRY') return res.status(402).send('email taken');
         console.log('there was an error')
         console.log(e)
         res.status(500).send('unexpected error')

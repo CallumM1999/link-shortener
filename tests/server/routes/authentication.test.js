@@ -15,7 +15,7 @@ const resetLinkTable = require('../utils/resetLinkTable')
 
 describe('POST /login', () => {
     const email = 'email@email.com';
-    const password = 'password1234';
+    const password = 'Password1234';
     const hash = bcrypt.hashSync(password, 10);
 
     before(() => new Promise(async resolve => {
@@ -83,7 +83,7 @@ describe('POST /login', () => {
 
 describe('POST /register', () => {
     const email = 'email@email.com';
-    const password = 'password1234';
+    const password = 'Password1234';
     const hash = bcrypt.hashSync(password, 10);
 
     before(() => new Promise(async resolve => {
@@ -189,12 +189,12 @@ describe('POST /register', () => {
             }).catch(e => done(e));
     });
 
-    it('should 403 (email already taken)', done => {
+    it('should 402 (email already taken)', done => {
         request(app)
             .post('/register')
             .send({ email, password })
             .then(response => {
-                expect(response.status).toBe(403);
+                expect(response.status).toBe(402);
                 done();
             }).catch(e => done(e));
     })

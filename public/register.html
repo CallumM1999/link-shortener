@@ -5,25 +5,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Register</title>
+
+    <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
-    <h1>Register page</h1>
+    <div id="app">
+        <page-header></page-header>
 
+        <form class="centeredForm" @submit='handleRegister'>
+            <div class="top">
+                <h2 class="title">Register</h2>
+            </div>
 
+            <div class="bottom">
+                <div class="row">
+                    <label class="label" for="email">Email</label>
+                    <input class="input" type="text" name="email" v-model='email'>
+                </div>
 
-    <form id="form">
-        <input type="text" placeholder="email" name="email">
-        <input type="text" placeholder="password" name="password">
+                <div class="row">
+                    <label class="label" for="password">Password</label>
+                    <input class="input" type="password" name="password" v-model='password'>
+                </div>
 
+                <div class="row">
+                    <label class="label" for="password_conf">Confirm Pasword</label>
+                    <input class="input" type="password" name="password_conf" v-model='password_conf'>
+                </div>
 
+                <div class="row">
+                    <p v-cloak v-if='error' class="error">{{error}}</p>
+                    <p v-cloak v-if='loading' class="loading">Loading...</p>
+                    <p v-cloak v-if='success' class="success">Success</p>
+                </div>
 
-        <input type="submit" value="login">
+                <div class="row">
+                    <button type="submit" class="button submit">Register</button>
+                </div>
 
-        <p><a href="/login">Login</a></p>
-    </form>
-
+                <p><a href="/login" class="link">Login</a></p>
+            </div>
+        </form>
+    </div>
 
     <script src="js/register.js"></script>
 </body>

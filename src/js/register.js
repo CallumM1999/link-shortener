@@ -1,34 +1,84 @@
-const form = document.querySelector('#form');
+import pageHeader from './components/header.js';
+import isEmail from 'validator/lib/isEmail';
 
-console.log('form', form)
+new Vue({
+    el: '#app',
+    components: {pageHeader},
+    data: function() {
+        return {
+            email: '',
+            password: '',
+            password_conf: '',
 
-const handleLogin = e => {
-    console.log('login');
-
-    console.log('email', e.target.email.value)
-
-
-    e.preventDefault();
-
-
-    fetch('register', {
-        method: 'post',
-        body: JSON.stringify({
-            email: e.target.email.value,
-            password: e.target.password.value
-        }),
-        headers: {
-            "Content-Type": "application/json",
-            // "Content-Type": "application/x-www-form-urlencoded",
-        },
-    }).then(res => {
-        if (res.status === 200) {
-            window.location = '/';
-        } else {
-            alert('error logging in, check console');
-            console.log(res)
+            error: null,
+            loading: false,
+            success: false
         }
-    })
-}
+    },
+    methods: {
+        handleRegister(e) {
+            e.preventDefault();
 
-form.addEventListener('submit', handleLogin)
+            if (this.validateRegister()) {
+                this.loading = true;
+
+                fetch('register', {
+                    method: 'post',
+                    body: JSON.stringify({
+                        email: this.email,
+                        password: this.password
+                    }),
+                    headers: {"Content-Type": "application/json"},
+                }).then(res => {
+                    this.loading = false;
+
+                    if (res.status === 200) {
+                        this.success = true;
+                        window.location = '/';
+                    } else {
+                        if (res.status === 402) return this.error = 'Email taken!';
+                        this.error = 'Oops! Something went wrong.';
+                    }
+                }).catch(err => {
+                    this.loading = false;
+                    this.error = 'Oops! Something went wrong.';
+                })
+            }
+            
+        },
+        validateRegister() {
+            if (!this.email || !this.password || !this.password_conf) {
+                this.error = `Missing fields!${!this.email? ' email':''}${!this.password ? ' password':''}${!this.password_conf ? ' password confirm':''}`;
+                return;
+            }
+
+            // validate email
+            if (!isEmail(this.email)) {
+                this.error = 'Invalid email!';
+                return;
+            }
+
+            // validate password
+            // rules :
+            // ===========
+            // length 8 - 100
+            // contain 1 number
+            // contain 1 capital letter
+            // ascii i.e. [\x00-\x7F]
+
+            const match = this.password.match(/(?=^([\x00-\x7F]{8,100})$)(?=[\x00-\x7F]*[0-9][\x00-\x7F]*)(?=[\x00-\x7F]*[A-Z][\x00-\x7F]*)/);
+
+            if (!match) {
+                this.error = 'Invalid Password! Must be 8-100 characters and contain 1 Number and 1 Capital Letter.';
+                return;
+            } else if (this.password !== this.password_conf) {
+                this.error = 'Password doesn\'t match!';
+                return;
+            }
+
+            this.error = null;
+            return true;
+        }
+    }
+})
+

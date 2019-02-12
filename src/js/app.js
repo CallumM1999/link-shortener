@@ -1,4 +1,8 @@
+import pageHeader from './components/header.js';
+
 // require('../scss/main.scss');
+
+
 
 // console.log('ENVIRONMENT', process.env.NODE_ENV)
 // if (process.env.NODE_ENV === 'development') {
@@ -9,6 +13,7 @@ import isURL from 'validator/lib/isURL';
 
 new Vue({
     el: '#app',
+    components: {pageHeader},
     data() {
         return {
             links: [],
@@ -19,7 +24,6 @@ new Vue({
             nextIndex: 0,
 
             loading: true,
-
 
             listDisplayList: true,
 
