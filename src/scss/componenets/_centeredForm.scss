@@ -29,6 +29,10 @@
     .row {
         width: 100%;
         margin-bottom: 20px;
+
+        &.status {
+            min-height: 28px;
+        }
     }
     
     .input {
@@ -55,7 +59,7 @@
         color: $color-white-main;
         font-size: 20px;
         font-weight: 100;
-        margin: 50px auto 0;
+        margin: 30px auto 0;
         display: block;
     }
 
