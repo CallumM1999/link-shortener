@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Label</title>
+
+    <link rel="stylesheet" href="/css/main.css">
+
+</head>
+
+<body>
+
+    <div id="app">
+        <page-header></page-header>
+
+        <div class="heading">
+            <div class="options">
+                <div class="container">
+                    <h2 class="title" v-cloak>{{label}}</h2>
+                    <p class="label url" v-cloak>
+                        <a :href="`/link/${url}`">{{url}}</a>
+                    </p>
+                    <p class="label" v-cloak>{{link}}</p>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="container">
+            <div class="activity">
+                <h3 class="title">Activity</h4>
+                    <h4 class="total">Total: {{log.length}}</h4>
+
+                    <div id="chart" class="chart"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="/js/options.js"></script>
+</body>
+
+</html>

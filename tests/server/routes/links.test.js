@@ -12,6 +12,7 @@ const insertUser = require('../utils/insertUser');
 const insertLink = require('../utils/insertLink');
 const resetUserTable = require('../utils/resetUserTable')
 const resetLinkTable = require('../utils/resetLinkTable')
+const visitLink = require('../utils/visitLink')
 
 const encodeURL = require('../../../server/utils/encodeURL');
 
@@ -165,11 +166,6 @@ describe('GET /link', () => {
 
             }).catch(e => done(e));
     })
-
-
-
-
-
 });
 
 describe('GET /link/:encodedURL', () => {
@@ -234,6 +230,80 @@ describe('GET /link/:encodedURL', () => {
                 done();
             }).catch(e => done(e));
     });
+})
 
 
+describe('GET /options/data/:encodedURL', () => {
+    const email = 'email@email.com';
+    const password = 'password1234';
+    const hash = bcrypt.hashSync(password, 10);
+    let userID;
+
+    const fullURL = 'https://github.com/CallumM1999/link-shortener/blob/master/README.md';
+    const label = 'Github';
+    const iconURL = 'http://github.com/favicon.icon';
+    let linkID;
+    let linkEncodedURL;
+
+    let cookie;
+
+    before(() => new Promise(async resolve => {
+        // reset tables;
+        await resetLinkTable();
+        await resetUserTable();
+
+        // create user
+        const user = await insertUser(email, hash);
+        userID = user.insertId;
+
+
+        // login
+        cookie = await login(email, password);
+
+        // insert a link
+        const insertedLink = await insertLink(fullURL, userID, label, iconURL)
+        linkID = insertedLink.insertId;
+
+        linkEncodedURL = encodeURL(linkID);
+
+        // visit link
+        await visitLink(linkEncodedURL);
+
+        resolve();
+    }));
+
+    it('get link data', done => {
+        request(app)
+            .get(`/options/data/${linkEncodedURL}`)
+            .set('Cookie', [cookie])
+            .then(response => {
+                const {body} = response;
+
+                expect(response.status).toEqual(200); 
+
+                expect(body.data.link).toEqual(fullURL);
+                expect(body.data.label).toEqual(label);
+                expect(body.data.url).toEqual(linkEncodedURL);
+
+                const query = `SELECT * FROM log WHERE linkID = linkID;`;
+
+                con.query(query, (err, res) => {
+                    if (err) done(err);
+
+                    expect(res.length).toBe(1);
+                    done();
+                })
+            }).catch(e => done(e));
+    });
+
+    it('should 404 (link doesnt exsist)', done => {
+        request(app)
+            .get(`/options/data/bbbbbb`)
+            .set('Cookie', [cookie])
+            .then(response => {
+                expect(response.status).toEqual(404);
+
+                done();
+            }).catch(e => done(e));
+    });
 })

@@ -79,42 +79,54 @@ router.get('/link/:encodedUrl', async (req, res) => {
     const { encodedUrl } = req.params;
     const decodedUrl = decodeURL(encodedUrl);
 
-    // console.log('request', req.http)
-
-    // console.log('body', req.body)
-
     const timestamp = Math.floor(Date.now() / 1000);
-
-    console.log('time', timestamp)
 
     const query = `SELECT link, id FROM link WHERE id = ${decodedUrl} LIMIT 1; `;
 
     con.query(query, (err, output) => {
-        console.log('first query')
         if (err) return status(404).send();
 
         if (!output.length) return res.status(404).send();
 
-
-
         res.status(200).redirect(output[0].link)
 
         // log request
-
         const query2 = `INSERT INTO log(linkID, timestamp) VALUES(${output[0].id}, ${timestamp}); `;
-
-        con.query(query2, (err, res) => {
-            console.log('logged')
-
-            if (err) console.log('log err', err);
-
-            console.log('log res', res)
-
-
-
-        })
-
+        con.query(query2);
     })
 })
+
+router.get('/options/data/:encodedUrl', authenticationMiddleware, async (req, res) => {
+    const { encodedUrl } = req.params;
+    const decodedUrl = decodeURL(encodedUrl);
+
+    const getLinkData = id => new Promise(resolve => {
+        const query = `SELECT * FROM link WHERE id = ${id};`;
+        con.query(query, (err, out) => resolve(out))
+    })
+
+    const getLogData = linkID => new Promise(resolve => {
+        const query = `SELECT * FROM log WHERE linkID = ${linkID}`;
+        con.query(query, (err, out) => {
+            resolve(out)
+        })
+    })
+
+    try {
+        const result = await Promise.all([
+            getLinkData(decodedUrl),
+            getLogData(decodedUrl)
+        ])
+
+        res.json({
+            data: {...result[0][0], url: encodeURL(result[0][0].id)},
+            log: result[1]
+        })
+    } catch(e) {
+        // console.log('ERROR', e)
+        res.status(404).send();
+    }
+})
+
 
 module.exports = router;

@@ -14,28 +14,30 @@
     <div id="app">
         <page-header></page-header>
 
-        <div class="create">
-            <div class="container">
-                <h2 class="title">Simplify your links</h2>
-                <form @submit='addLink'>
-                    <div class="row">
-                        <input type="text" placeholder="Your original URL here" class="input" v-model='createInputLink'>
-                        <input type="text" placeholder="Label" class="input" v-model='createInputLabel'>
-                    </div>
+        <div class="heading">
+            <div class="create">
+                <div class="container">
+                    <h2 class="title">Simplify your links</h2>
+                    <form @submit='addLink'>
+                        <div class="row">
+                            <input type="text" placeholder="Your original URL here" class="input" v-model='createInputLink'>
+                            <input type="text" placeholder="Label" class="input" v-model='createInputLabel'>
+                        </div>
 
-                    <div class="row">
-                        <button class='button' type='submit'>SHORTEN URL</button>
-                    </div>
-                </form>
+                        <div class="row">
+                            <button class='button' type='submit'>SHORTEN URL</button>
+                        </div>
+                    </form>
 
-                <div class="response" v-if='createMsg' v-cloak>
-                    <p v-bind:class='createMsg.type' v-if='createMsg'>
-                        <span v-if='createMsg.type === "error" || createMsg.type === "success"' v-cloak>{{createMsg.msg}}</span>
-                        <span v-if='createMsg.type === "loading"'>Loading...</span>
-                    </p>
+                    <div class="response" v-if='createMsg' v-cloak>
+                        <p v-bind:class='createMsg.type' v-if='createMsg'>
+                            <span v-if='createMsg.type === "error" || createMsg.type === "success"' v-cloak>{{createMsg.msg}}</span>
+                            <span v-if='createMsg.type === "loading"'>Loading...</span>
+                        </p>
+                    </div>
                 </div>
-            </div>
 
+            </div>
         </div>
 
         <div class="container">
@@ -91,11 +93,11 @@
                                     </li>
                                     <li class="rowcol visits">{{ link.visits }}</li>
                                     <li class="rowcol options">
-                                        <button class="options">
+                                        <a :href='"/options/" + link.url' class="options">
                                             <span></span>
                                             <span></span>
                                             <span></span>
-                                        </button>
+                                        </a>
                                     </li>
                                 </ul>
                             </li>

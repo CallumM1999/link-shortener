@@ -1,0 +1,28 @@
+.options {
+    min-height: 115px;
+    
+    .title,
+    .label {
+        text-align: center;
+    }
+
+    .title {
+        font-size: 32px;
+        font-weight: 100;
+        color: $color-primary;
+    }
+
+    .label {
+        > a {
+            color: inherit;
+            text-decoration: none;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        &.url {
+            text-transform: uppercase;
+        }
+    }
+}

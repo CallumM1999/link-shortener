@@ -10,6 +10,7 @@ module.exports = (undefined, argv) => {
             main: path.resolve(__dirname, 'src', 'js', 'app.js'),
             login: path.resolve(__dirname, 'src', 'js', 'login.js'),
             register: path.resolve(__dirname, 'src', 'js', 'register.js'),
+            options: path.resolve(__dirname, 'src', 'js', 'options.js'),
         },
         output: {
             filename: 'js/[name].js',
