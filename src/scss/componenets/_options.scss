@@ -25,4 +25,20 @@
             text-transform: uppercase;
         }
     }
+
+    .status {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+
+        > span {
+            background-color: $color-success;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        &.disabled > span {
+            background-color: $color-error
+        }
+    }
 }

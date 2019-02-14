@@ -1,0 +1,87 @@
+.control {
+    background-color: $color-white-main;
+    border-radius: 5px;
+    min-height: 40px;
+    color: $color-white-main;
+    margin-top: 30px;
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden;
+
+    .top {
+        height: 40px;
+        background-color: $color-primary;
+        padding: 0 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        z-index: 20;
+    }
+
+    .label {
+        margin: 0;
+        height: auto;
+        font-size: 22px;
+        font-weight: 100;
+    }
+
+    .togglelabel {
+
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        > span {
+            background-color: $color-white-main;
+            width: 20px;
+            height: 16px;
+            display: block;
+            transition: all .2s ease-in-out .2s;
+            clip-path: polygon(0% 10%, 100% 10%, 50% 100%);
+        }
+    }
+    
+    .toggle {  display: none }
+
+    .form {
+        background-color: $color-secondary;
+        padding: 10px;
+        position: relative;
+        transform: translateY(-100%);
+        margin-bottom: -110px;
+        transition: all .4s ease-out;
+    }
+
+    .row {
+        width: 100%;
+        display: flex;
+        justify-content: space-evenly;
+        padding: 20px 0;
+    }
+
+    .button {
+        padding: 16px 32px;
+        color: $color-white-main;
+        text-transform: uppercase;
+        font-size: 14px;
+
+        &.delete { background-color: $color-error }
+        &.disable { background-color: hsl(208,78%,65%) }
+    }
+
+    &.active {
+        .form {
+            margin-bottom: 0;
+            transform: none;
+            transition: all .4s ease-out;
+        }
+
+        .togglelabel > span {
+            transition: all .2s ease-in-out .2s;
+            transform-origin: 50% 50%;
+            transform: rotate(-180deg);
+        }
+    }
+}

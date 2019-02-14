@@ -1,5 +1,6 @@
 import pageHeader from './components/header.js';
 import echarts from 'echarts';
+import modal from './components/modal';
 
 const generateFormOptions = (log) => {
     
@@ -75,9 +76,16 @@ new Vue({
             link: null,
             label: null,
             log: [],
-
-
             url: null,
+            disabled: true,
+
+            controlToggled: false,
+
+
+            modalDelete: false,
+            modalDisable: false,
+
+            // this.disabled 
         }
     },
 
@@ -115,6 +123,46 @@ new Vue({
 
             })
         })
+
+    },
+
+    methods: {
+        handleDelete() {
+            this.modalDelete = true;
+        },
+        closeModalDelete() {
+            this.modalDelete = false;
+        },
+        confirmDelete() {
+            console.log('Confirm delete')
+            this.closeModalDelete()
+            // delete, then redirect to /            
+        },
+
+
+
+
+
+        handleDisable() {
+            this.modalDisable = true;
+        },
+        closeModalDisable() {
+            this.modalDisable = false;
+        },
+        confirmDisable() {
+            this.closeModalDisable()
+
+            // send request, then update       
+            if (!this.disabled) {
+                console.log('Confirm disable')
+                // send request
+                this.disabled = true;
+            } else {
+                console.log('Confirm enable')
+                // send request
+                this.disabled = false;
+            }
+        }
 
     }
     
