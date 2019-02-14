@@ -29,6 +29,7 @@ module.exports = () => {
                 label VARCHAR(255) NOT NULL,
                 icon VARCHAR(255),
                 userID INT NOT NULL,
+                disabled BOOLEAN NOT NULL,
                 FOREIGN KEY (userID) REFERENCES user (id) ON DELETE CASCADE
             );`)
         }

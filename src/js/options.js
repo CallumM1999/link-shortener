@@ -77,7 +77,7 @@ new Vue({
             label: null,
             log: [],
             url: null,
-            disabled: true,
+            disabled: null,
 
             controlToggled: false,
 
@@ -106,11 +106,12 @@ new Vue({
 
             response.json().then(val => {
 
-                // console.log('val', val)
+                console.log('val', val)
 
                 this.label = val.data.label;
                 this.link = val.data.link;
                 this.url = val.data.url;
+                this.disabled = val.data.disabled == 1 ? true : false;
 
                 // log is for the graph
 
@@ -134,9 +135,24 @@ new Vue({
             this.modalDelete = false;
         },
         confirmDelete() {
-            console.log('Confirm delete')
             this.closeModalDelete()
-            // delete, then redirect to /            
+            // delete, then redirect to /    
+            fetch(`/link/${this.url}`, {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Cache': 'no-cache'
+                },
+                credentials: 'include',
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    console.log('Confirm delete')
+                    window.location = '/';
+                }
+            })
+            .catch(err => console.log('error', error))
         },
 
 
@@ -153,17 +169,21 @@ new Vue({
             this.closeModalDisable()
 
             // send request, then update       
-            if (!this.disabled) {
-                console.log('Confirm disable')
-                // send request
-                this.disabled = true;
-            } else {
-                console.log('Confirm enable')
-                // send request
-                this.disabled = false;
-            }
+            fetch(`/link/disable/${this.url}`, {
+                method: 'PATCH',
+                body: JSON.stringify({updateTo: !this.disabled}),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Cache': 'no-cache'
+                },
+                credentials: 'include',
+            })
+            .then(response => {
+                if (response.status === 200) this.disabled = !this.disabled;
+            })
+            .catch(err => console.log('error', error))
         }
-
     }
     
 })
