@@ -337,7 +337,6 @@ describe('PATCH /link/disable/:encodedURL', () => {
         await resetLogTable();
         await resetLinkTable();
         await resetUserTable();
-        await resetSessionTable();
 
         // create user
         const user = await insertUser(email, hash);
