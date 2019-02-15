@@ -67,46 +67,45 @@
             <div class="list" v-bind:class='{displayGrid: !listDisplayList}'>
 
                 <ul class="table">
-                    <div>
-                        <li class="row title">
-                            <ul class="rowlist-title">
-                                <li class="rowcol">Name</li>
-                                <li class="rowcol">Alias</li>
-                                <li class="rowcol">Link</li>
-                                <li class="rowcol">Status</li>
-                                <li class="rowcol">Visits</li>
-                                <li class="rowcol"></li>
-                            </ul>
-                        </li>
+                    <li class="row title">
+                        <ul class="rowlist-title">
+                            <li class="rowcol">Name</li>
+                            <li class="rowcol">Alias</li>
+                            <li class="rowcol">Link</li>
+                            <li class="rowcol">Status</li>
+                            <li class="rowcol">Visits</li>
+                            <li class="rowcol"></li>
+                        </ul>
+                    </li>
 
+                    <li class="row" v-for='link in visibleLinks'>
                         <div v-cloak>
-                            <li class="row" v-for='link in visibleLinks'>
-                                <ul class="rowlist">
+                            <ul class="rowlist">
 
-                                    <li class="rowcol label">{{ link.label }}</li>
-                                    <li class="rowcol url">
-                                        <a :href="'/link/' + link.url" class="link">{{ link.url }}</a>
-                                    </li>
+                                <li class="rowcol label">{{ link.label }}</li>
+                                <li class="rowcol url">
+                                    <a :href="'/link/' + link.url" class="link">{{ link.url }}</a>
+                                </li>
 
-                                    <li class="rowcol link">
-                                        <img :src='link.icon ? link.icon : "assets/defaultIcon.png"' class="icon">
-                                        <span class="text">{{ link.link }}</span>
-                                    </li>
-                                    <li class="rowcol status" v-bind:class='{disabled : link.disabled == 1}'>
-                                        <span>{{ link.disabled == 1 ? 'Disabled' : 'Enabled' }}</span>
-                                    </li>
-                                    <li class="rowcol visits">{{ link.visits }}</li>
-                                    <li class="rowcol options">
-                                        <a :href='"/options/" + link.url' class="options">
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                                <li class="rowcol link">
+                                    <img :src='link.icon ? link.icon : "assets/defaultIcon.png"' class="icon">
+                                    <span class="text">{{ link.link }}</span>
+                                </li>
+                                <li class="rowcol status" v-bind:class='{disabled : link.disabled == 1}'>
+                                    <span>{{ link.disabled == 1 ? 'Disabled' : 'Enabled' }}</span>
+                                </li>
+                                <li class="rowcol visits">{{ link.visits }}</li>
+                                <li class="rowcol options">
+                                    <a :href='"/options/" + link.url' class="options">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </a>
+                                </li>
+
+                            </ul>
                         </div>
-                    </div>
+                    </li>
                 </ul>
 
                 <div class="controls">
