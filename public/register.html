@@ -12,42 +12,45 @@
 
 <body>
     <div id="app">
-        <page-header></page-header>
+        <div class="containerfillscreen">
 
-        <form class="centeredForm" @submit='handleRegister'>
-            <div class="top">
-                <h2 class="title">Register</h2>
-            </div>
+            <page-header></page-header>
 
-            <div class="bottom">
-                <div class="row">
-                    <label class="label" for="email">Email</label>
-                    <input class="input" type="text" name="email" v-model='email'>
+            <form class="centeredForm" @submit='handleRegister'>
+                <div class="top">
+                    <h2 class="title">Register</h2>
                 </div>
 
-                <div class="row">
-                    <label class="label" for="password">Password</label>
-                    <input class="input" type="password" name="password" v-model='password'>
-                </div>
+                <div class="bottom">
+                    <div class="row">
+                        <label class="label" for="email">Email</label>
+                        <input class="input" type="text" name="email" v-model='email'>
+                    </div>
 
-                <div class="row">
-                    <label class="label" for="password_conf">Confirm Pasword</label>
-                    <input class="input" type="password" name="password_conf" v-model='password_conf'>
-                </div>
+                    <div class="row">
+                        <label class="label" for="password">Password</label>
+                        <input class="input" type="password" name="password" v-model='password'>
+                    </div>
 
-                <div class="row status">
-                    <p v-cloak v-if='error' class="error">{{error}}</p>
-                    <p v-cloak v-if='loading' class="loading">Loading...</p>
-                    <p v-cloak v-if='success' class="success">Success</p>
-                </div>
+                    <div class="row">
+                        <label class="label" for="password_conf">Confirm Pasword</label>
+                        <input class="input" type="password" name="password_conf" v-model='password_conf'>
+                    </div>
 
-                <div class="row">
-                    <button type="submit" class="button submit">Register</button>
-                </div>
+                    <div class="row status">
+                        <p v-cloak v-if='error' class="error">{{error}}</p>
+                        <p v-cloak v-if='loading' class="loading">Loading...</p>
+                        <p v-cloak v-if='success' class="success">Success</p>
+                    </div>
 
-                <p><a href="/login" class="link">Login</a></p>
-            </div>
-        </form>
+                    <div class="row">
+                        <button type="submit" class="button submit">Register</button>
+                    </div>
+
+                    <p><a href="/login" class="link">Login</a></p>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script src="js/register.js"></script>

@@ -92,6 +92,8 @@ new Vue({
         const linkURL = href.split('/').slice(-1)[0];
 
         this.loadGraph(linkURL);
+
+        window.addEventListener('resize', () => myChart.resize())
     },
 
     methods: {

@@ -3,7 +3,7 @@
     border-radius: 5px;
     min-height: 40px;
     color: $color-white-main;
-    margin-top: 30px;
+    margin: 30px 0;
     position: relative;
     box-sizing: border-box;
     overflow: hidden;
@@ -17,13 +17,6 @@
         align-items: center;
         position: relative;
         z-index: 20;
-    }
-
-    .label {
-        margin: 0;
-        height: auto;
-        font-size: 22px;
-        font-weight: 100;
     }
 
     .togglelabel {

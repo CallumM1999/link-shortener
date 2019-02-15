@@ -1,0 +1,11 @@
+.containerfillscreen {
+    min-height: 100vh;
+    width: 100%;
+    position: absolute;
+}
+
+@media (max-width: 650px) {
+    .containerfillscreen {
+       background-color: $color-white-main;
+    }
+}

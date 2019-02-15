@@ -47,13 +47,14 @@
                     <input type="text" placeholder="Filter" class="input" v-model='filter'>
                 </div>
                 <div class="right">
-                    <button class="buttongrid" v-bind:class='{selected: !listDisplayList}' @click='toggleListDisplayOption'>
+                    <button class="buttongrid" v-bind:class='{selected: (forceGrid || !listDisplayList)}' @click='toggleListDisplayOption'>
                         <span></span>
                         <span></span>
                         <span></span>
                         <span></span>
                     </button>
-                    <button class="buttonlist" v-bind:class='{selected: listDisplayList}' @click='toggleListDisplayOption'>
+                    <button class="buttonlist" v-bind:class='{selected: listDisplayList}' @click='toggleListDisplayOption'
+                        v-if='!forceGrid'>
                         <span></span>
                         <span></span>
                         <span></span>
@@ -64,27 +65,37 @@
                 </div>
             </div>
 
-            <div class="list" v-bind:class='{displayGrid: !listDisplayList}'>
+            <div class="list" v-bind:class='{displayGrid: (forceGrid || !listDisplayList)}'>
 
                 <ul class="table">
                     <li class="row title">
                         <ul class="rowlist-title">
-                            <li class="rowcol">Name</li>
-                            <li class="rowcol">Alias</li>
-                            <li class="rowcol">Link</li>
-                            <li class="rowcol">Status</li>
-                            <li class="rowcol">Visits</li>
+                            <li class="rowcol">
+                                <h5 class="colheading">Name</h5>
+                            </li>
+                            <li class="rowcol">
+                                <h5 class="colheading">Alias</h5>
+                            </li>
+                            <li class="rowcol">
+                                <h5 class="colheading">Link</h5>
+                            </li>
+                            <li class="rowcol">
+                                <h5 class="colheading">Status</h5>
+                            </li>
+                            <li class="rowcol">
+                                <h5 class="colheading">Visits</h5>
+                            </li>
                             <li class="rowcol"></li>
                         </ul>
                     </li>
 
                     <li class="row" v-for='link in visibleLinks'>
-                        <div v-cloak>
+                        <div v-cloak style='width:100%;height:100%'>
                             <ul class="rowlist">
 
                                 <li class="rowcol label">{{ link.label }}</li>
                                 <li class="rowcol url">
-                                    <a :href="'/link/' + link.url" class="link">{{ link.url }}</a>
+                                    <a :href="'/link/' + link.url" class="url">{{ link.url }}</a>
                                 </li>
 
                                 <li class="rowcol link">
@@ -118,10 +129,6 @@
                     {{filteredLinks.length}} total items
                 </div>
             </div>
-        </div>
-
-        <div class="footer">
-            <p>some footer</p>
         </div>
 
         <!-- <p><a href="http://documentation.commvault.com/commvault/v11_sp8/images/data_cube/analytics_dashboard.png">link</a></p> -->
