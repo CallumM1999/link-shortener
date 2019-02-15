@@ -73,6 +73,7 @@
                                 <li class="rowcol">Name</li>
                                 <li class="rowcol">Alias</li>
                                 <li class="rowcol">Link</li>
+                                <li class="rowcol">Status</li>
                                 <li class="rowcol">Visits</li>
                                 <li class="rowcol"></li>
                             </ul>
@@ -90,6 +91,9 @@
                                     <li class="rowcol link">
                                         <img :src='link.icon ? link.icon : "assets/defaultIcon.png"' class="icon">
                                         <span class="text">{{ link.link }}</span>
+                                    </li>
+                                    <li class="rowcol status" v-bind:class='{disabled : link.disabled == 1}'>
+                                        <span>{{ link.disabled == 1 ? 'Disabled' : 'Enabled' }}</span>
                                     </li>
                                     <li class="rowcol visits">{{ link.visits }}</li>
                                     <li class="rowcol options">
