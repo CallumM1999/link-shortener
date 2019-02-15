@@ -67,7 +67,6 @@ const generateFormOptions = (log) => {
     };
 }
 
-
 new Vue({
     el: '#app',
     components: {pageHeader},
@@ -81,11 +80,10 @@ new Vue({
 
             controlToggled: false,
 
-
             modalDelete: false,
             modalDisable: false,
 
-            // this.disabled 
+            refreshLoading: false,
         }
     },
 
@@ -93,41 +91,54 @@ new Vue({
         const href = window.location.href;
         const linkURL = href.split('/').slice(-1)[0];
 
-        fetch(`/options/data/${linkURL}`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Cache': 'no-cache'
-            },
-            credentials: 'include',
-        }).then(response => {
-            console.log('response', response)
-
-            response.json().then(val => {
-
-                console.log('val', val)
-
-                this.label = val.data.label;
-                this.link = val.data.link;
-                this.url = val.data.url;
-                this.disabled = val.data.disabled == 1 ? true : false;
-
-                // log is for the graph
-
-                this.log = val.log;
-
-                // console.log(*)
-                const options = generateFormOptions(this.log);
-
-                myChart.setOption(options);
-
-            })
-        })
-
+        this.loadGraph(linkURL);
     },
 
     methods: {
+        refresh() {
+            console.log('Refreshing graph');
+
+            this.refreshLoading = true;
+
+            this.loadGraph(this.url)
+            .then(() => {
+                // refresh is too quick
+                setTimeout(() => { this.refreshLoading = false; }, 1000);
+            })
+        },
+        loadGraph(linkURL) {
+            return new Promise(resolve => {
+                fetch(`/options/data/${linkURL}`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Cache': 'no-cache'
+                    },
+                    credentials: 'include',
+                })
+                .then(response => response.json())
+                .then(val => {
+                    this.label = val.data.label;
+                    this.link = val.data.link;
+                    this.url = val.data.url;
+                    this.disabled = val.data.disabled == 1 ? true : false;
+    
+                    // log is for the graph
+                    this.log = val.log;
+
+                    this.renderGraph(this.log)
+                    
+                    resolve();
+                })
+            });
+
+        },
+        renderGraph(log) {
+            const options = generateFormOptions(log);
+            myChart.setOption(options);
+        },
+
         handleDelete() {
             this.modalDelete = true;
         },
@@ -154,10 +165,6 @@ new Vue({
             })
             .catch(err => console.log('error', error))
         },
-
-
-
-
 
         handleDisable() {
             this.modalDisable = true;
