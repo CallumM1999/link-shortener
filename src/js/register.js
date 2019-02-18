@@ -7,6 +7,7 @@ new Vue({
     data: function() {
         return {
             email: '',
+            email_conf: '',
             password: '',
             password_conf: '',
 
@@ -47,14 +48,17 @@ new Vue({
             
         },
         validateRegister() {
-            if (!this.email || !this.password || !this.password_conf) {
-                this.error = `Missing fields!${!this.email? ' email':''}${!this.password ? ' password':''}${!this.password_conf ? ' password confirm':''}`;
+            if (!this.email || !this.email_conf ||!this.password || !this.password_conf) {
+                this.error = `Missing fields!${!this.email? ' email':''}${!this.email_conf ? ' confirm email':''}${!this.password ? ' password':''}${!this.password_conf ? ' password confirm':''}`;
                 return;
             }
 
             // validate email
             if (!isEmail(this.email)) {
                 this.error = 'Invalid email!';
+                return;
+            } else if (this.email !== this.email_conf) {
+                this.error = 'Email doesn\'t match!';
                 return;
             }
 

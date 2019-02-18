@@ -35,7 +35,7 @@
                             v-cloak>{{createMsg.msg}}</span>
                         <span class="message" v-if='createMsg.type === "loading"'>Loading...</span>
 
-                        <button class="close" @click='closeMessage'>
+                        <button class="close" @click='closeMessage' v-cloak>
                             <img class="icon" src="/assets/baseline-close-24px.svg" alt="close">
                         </button>
                     </div>
