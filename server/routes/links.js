@@ -133,7 +133,7 @@ router.get('/options/data/:encodedUrl', authenticationMiddleware, async (req, re
     })
 
     const getLogData = linkID => new Promise(resolve => {
-        const query = `SELECT * FROM log WHERE linkID = ${linkID}`;
+        const query = `SELECT (timestamp - (timestamp % 3600)) AS timestamp, HOUR(FROM_UNIXTIME(timestamp)) AS hour FROM log WHERE linkID = ${linkID} AND FROM_UNIXTIME(timestamp) > DATE_SUB(NOW(), INTERVAL 1 DAY);`;
         con.query(query, (err, out) => {
             resolve(out)
         })
