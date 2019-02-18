@@ -8,35 +8,84 @@
 
     .container {
         max-width: 1000px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        position: relative;
     }
 
     a {
         text-decoration: none;
+        color: inherit;
     }
 
     .title {
+        position: absolute;
+        top: 50%;
+        left: 20px;
+        transform: translateY(-50%);
+    }
+
+    .logout {
+        z-index: 100;
+    }
+
+    .title_text {
         text-transform: uppercase;
         letter-spacing: 5px;
         color: white;
     }
 
-}
+    .logout_text {
+        color: $color-white-main;
 
-@media (max-width: 400px) {
-    .header .title {
-        font-size: 32px;
-        word-spacing: 100vw;         
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }
 
-@media (max-width: 300px) {
-    .header .title {
-        font-size: 26px;
+@media (max-width: 530px) {
+    .header {
+        .title_text {
+            font-size: 32px;
+            word-spacing: 100vw;         
+        }
+        .logout_text {
+            font-size: 16px
+        }
     }
 }
 
-@media (max-width: 250px) {
-    .header .title {
-        font-size: 20px;
+@media (max-width: 360px) {
+    .header {
+        .title_text {
+            font-size: 26px;
+        }
+        .logout_text {
+            font-size: 14px
+        }
+    }
+}
+
+@media (max-width: 315px) {
+    .header {
+        .title_text {
+            font-size: 20px;
+        }
+        .logout_text {
+            font-size: 13px
+        }
+    }
+}
+
+@media (max-width: 275px) {
+    .header {
+        .title_text {
+            font-size: 16px;
+        }
+        .logout_text {
+            font-size: 12px
+        }
     }
 }

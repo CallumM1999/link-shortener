@@ -35,6 +35,7 @@ app.use('/assets/', express.static('public/assets'));
 app.use(require('./routes/links'));
 app.use(require('./routes/pages'));
 app.use(require('./routes/authentication'));
+app.use(require('./routes/error'));
 
 app.listen(PORT, () => console.log('Server running on port', PORT));
 
