@@ -139,15 +139,24 @@ router.get('/options/data/:encodedUrl', authenticationMiddleware, async (req, re
         })
     })
 
+    const getCountData = linkID => new Promise(resolve => {
+        const query = `SELECT COUNT(timestamp) AS count FROM log WHERE linkID = ${linkID};`;
+        con.query(query, (err, out) => {
+            resolve(out)
+        })
+    })
+
     try {
         const result = await Promise.all([
             getLinkData(decodedUrl),
-            getLogData(decodedUrl)
+            getLogData(decodedUrl),
+            getCountData(decodedUrl)
         ])
 
         res.json({
             data: {...result[0][0], url: encodeURL(result[0][0].id)},
-            log: result[1]
+            log: result[1],
+            count: result[2][0].count
         })
     } catch(e) {
         // console.log('ERROR', e)

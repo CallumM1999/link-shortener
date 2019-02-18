@@ -11,6 +11,7 @@ new Vue({
             link: null,
             label: null,
             log: [],
+            count: 0,
             url: null,
             disabled: null,
 
@@ -64,7 +65,8 @@ new Vue({
     
                     // log is for the graph
                     this.log = val.log;
-                    
+                    this.count = val.count;
+
                     this.renderGraph(this.log)
                     
                     resolve();
