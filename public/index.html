@@ -20,7 +20,8 @@
                     <h2 class="title">Simplify your links</h2>
                     <form @submit='addLink'>
                         <div class="row">
-                            <input type="text" placeholder="Your original URL here" class="input" v-model='createInputLink'>
+                            <input type="text" placeholder="Your original URL here" class="input"
+                                v-model='createInputLink'>
                             <input type="text" placeholder="Label" class="input" v-model='createInputLabel'>
                         </div>
 
@@ -29,11 +30,14 @@
                         </div>
                     </form>
 
-                    <div class="response" v-if='createMsg' v-cloak>
-                        <p v-bind:class='createMsg.type' v-if='createMsg'>
-                            <span v-if='createMsg.type === "error" || createMsg.type === "success"' v-cloak>{{createMsg.msg}}</span>
-                            <span v-if='createMsg.type === "loading"'>Loading...</span>
-                        </p>
+                    <div class="response" v-bind:class='createMsg.type' v-if='createMsg' v-cloak>
+                        <span class="message" v-if='createMsg.type === "error" || createMsg.type === "success"'
+                            v-cloak>{{createMsg.msg}}</span>
+                        <span class="message" v-if='createMsg.type === "loading"'>Loading...</span>
+
+                        <button class="close" @click='closeMessage'>
+                            <img class="icon" src="/assets/baseline-close-24px.svg" alt="close">
+                        </button>
                     </div>
                 </div>
 
@@ -47,14 +51,15 @@
                     <input type="text" placeholder="Filter" class="input" v-model='filter'>
                 </div>
                 <div class="right">
-                    <button class="buttongrid" v-bind:class='{selected: (forceGrid || !listDisplayList)}' @click='toggleListDisplayOption'>
+                    <button class="buttongrid" v-bind:class='{selected: (forceGrid || !listDisplayList)}'
+                        @click='toggleListDisplayOption'>
                         <span></span>
                         <span></span>
                         <span></span>
                         <span></span>
                     </button>
-                    <button class="buttonlist" v-bind:class='{selected: listDisplayList}' @click='toggleListDisplayOption'
-                        v-if='!forceGrid'>
+                    <button class="buttonlist" v-bind:class='{selected: listDisplayList}'
+                        @click='toggleListDisplayOption' v-if='!forceGrid'>
                         <span></span>
                         <span></span>
                         <span></span>
@@ -120,8 +125,10 @@
                 </ul>
 
                 <div class="controls">
-                    <button class="button-previous" @click='handlePrevious' v-bind:class='{active: nextIndex > 0}'>Previous</button>
-                    <button class="button-next" @click='handleNext' v-bind:class='{active: filteredLinks.length - ((nextIndex + 1) * 6) > 0}'>Next</button>
+                    <button class="button-previous" @click='handlePrevious'
+                        v-bind:class='{active: nextIndex > 0}'>Previous</button>
+                    <button class="button-next" @click='handleNext'
+                        v-bind:class='{active: filteredLinks.length - ((nextIndex + 1) * 6) > 0}'>Next</button>
                 </div>
 
                 <div class="description" v-cloak>

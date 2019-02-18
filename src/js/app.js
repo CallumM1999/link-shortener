@@ -137,6 +137,9 @@ new Vue({
                         // use data to add to list
                     })
                 })
+        },
+        closeMessage() {
+            this.createMsg = null;
         }
     }
 })
