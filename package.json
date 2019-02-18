@@ -7,6 +7,7 @@
     "dependencies": {
         "bcrypt": "^3.0.3",
         "body-parser": "^1.18.3",
+        "dotenv": "^6.2.0",
         "echarts": "^4.1.0",
         "express": "^4.16.4",
         "express-mysql-session": "^2.1.0",
@@ -23,6 +24,8 @@
         "build-watch": "webpack --watch --dev",
         "dev-server": "webpack-dev-server --dev",
         "start": "node server/server.js",
+        "start-dev": "node -r dotenv/config server/server.js",
+        "watch-dev": "nodemon -r dotenv/config server/server.js",
         "postinstall": "webpack",
         "test": "mocha tests/**/*.test.js",
         "test-watch": "nodemon --exec 'yarn test'"
