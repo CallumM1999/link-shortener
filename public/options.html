@@ -46,8 +46,8 @@
 
                 <div class="form">
                     <div class="row">
-                        <button class="button disable"
-                            @click='handleDisable'>{{disabled ? 'Enable' : 'Disable'}}</button>
+                        <button class="button disable" @click='handleDisable'
+                            v-bind:class='{disabled:!disabled}'>{{disabled ? 'Enable' : 'Disable'}}</button>
                         <button class="button delete" @click='handleDelete'>Delete</button>
                     </div>
                 </div>

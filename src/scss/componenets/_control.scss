@@ -61,7 +61,8 @@
         font-size: 14px;
 
         &.delete { background-color: $color-error }
-        &.disable { background-color: hsl(208,78%,65%) }
+        &.disable { background-color: $color-success }
+        &.disable.disabled { background-color: hsl(208,78%,65%) }
     }
 
     &.active {
