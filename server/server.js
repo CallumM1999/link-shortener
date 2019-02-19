@@ -7,6 +7,8 @@ const setupDB = require('./db/setupDB');
 const session = require('express-session');
 const mySqlStore = require('express-mysql-session')(session);
 
+const serveGzipped = require('./middleware/serveGzipped');
+
 const con = require('./db/connection');
 const sessionStore = new mySqlStore({}, con);
 
@@ -27,6 +29,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(bodyParser())
+
+app.get('*.js', serveGzipped('text/javascript'))
+app.get('*.css', serveGzipped('text/css'))
 
 app.use('/js/', express.static('public/js'));
 app.use('/css/', express.static('public/css'));

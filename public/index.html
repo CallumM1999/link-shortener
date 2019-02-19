@@ -7,7 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Link Shortener</title>
 
+    <!-- Load polyfill -->
+    <script>var modernBrowser = "fetch" in window && "assign" in Object; if (!modernBrowser) { var scriptElement = document.createElement("script"); scriptElement.async = !1, scriptElement.src = "js/polyfills.bundle.js", document.head.appendChild(scriptElement) }</script>
+
     <link rel="stylesheet" href="css/main.css">
+    <script src="js/vue.bundle.js"></script>
 </head>
 
 <body>
@@ -143,7 +147,7 @@
 
     </div>
 
-    <script src="js/main.js"></script>
+    <script src="js/main.bundle.js"></script>
 </body>
 
 </html>
