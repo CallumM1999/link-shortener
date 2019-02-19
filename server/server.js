@@ -12,6 +12,8 @@ const serveGzipped = require('./middleware/serveGzipped');
 const con = require('./db/connection');
 const sessionStore = new mySqlStore({}, con);
 
+if (process.env.TESTING) require('dotenv').config();
+
 con.connect((err) => {
     if (err) throw err;
     if (!process.env.TESTING) setupDB();
