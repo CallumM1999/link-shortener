@@ -1,8 +1,10 @@
 import pageHeader from './components/header.js';
 
+import shakeError from './animations/shakeError';
+import fadeIn from './animations/fadeIn';
+import fadeOut from './animations/fadeOut';
+
 // require('../scss/main.scss');
-
-
 
 // console.log('ENVIRONMENT', process.env.NODE_ENV)
 // if (process.env.NODE_ENV === 'development') {
@@ -89,19 +91,19 @@ new Vue({
 
         },
         addLink(e) {
-            e.preventDefault();
-
+            e.preventDefault();       
+     
             // prevent spam
             if (this.createMsg && this.createMsg.status === 'loading') return;
 
             //validate link
-            if (!this.createInputLink.length) return this.createMsg = { type: 'error', msg: 'Please add a link' };
-            if (!isURL(this.createInputLink)) return this.createMsg = { type: 'error', msg: 'Link must be valid' };
-            if (!this.createInputLink.match(/^(http:\/\/)|(https:\/\/)/)) return this.createMsg = { type: 'error', msg: 'Link must start with http:// or https://' };
+            if (!this.createInputLink.length) return this.error('Please add a link');
+            if (!isURL(this.createInputLink)) return this.error('Link must be valid')
+            if (!this.createInputLink.match(/^(http:\/\/)|(https:\/\/)/)) return this.error('Link must start with http:// or https://');
 
             // validate label
-            if (!this.createInputLabel.length) return this.createMsg = { type: 'error', msg: 'Please add a label' };
-            if (this.createInputLabel.length > 30) return this.createMsg = { type: 'error', msg: 'Label must be less than 30 characters' };
+            if (!this.createInputLabel.length) return this.error('Please add a label')
+            if (this.createInputLabel.length > 30) return this.error('Label must be less than 30 characters');
 
             // if no errors, send request
             this.createMsg = { type: 'loading' }
@@ -120,26 +122,36 @@ new Vue({
                 })
             })
                 .then(response => {
-                    if (response.status !== 200) return this.createMsg = { type: 'error', msg: 'Oops! Something went wrong.' };
+                    if (response.status !== 200) return this.error('Oops! Something went wrong.')
 
-                    // success
-                    this.createMsg = { type: 'success', msg: 'Link added!' };
-
-                    this.createInputLabel = '';
-                    this.createInputLink = '';
+                    this.success();
 
                     response.json().then(val => {
-                        console.log('BODY', val);
                         this.links.unshift(val);
                         this.updateVisibleLinks();
-
-
-                        // use data to add to list
                     })
                 })
         },
+        loading() {
+
+        },
+        success() {
+            this.createMsg = { type: 'success', msg: 'Link added!' };
+
+            this.createInputLabel = '';
+            this.createInputLink = '';
+        },
+        error(msg) {
+            this.createMsg = { type: 'error', msg };
+
+            shakeError(this.$refs.addLinkBtn)
+        },
         closeMessage() {
             this.createMsg = null;
-        }
+        }, 
+
+        // animations
+        enter: fadeIn,
+        leave: fadeOut,
     }
 })

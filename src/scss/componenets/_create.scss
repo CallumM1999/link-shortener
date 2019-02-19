@@ -24,6 +24,9 @@
         padding: 10px;
         overflow: hidden;
         box-sizing: border-box;
+
+        // for fade in/out animations
+        opacity: 0;
     }
 
     .close {

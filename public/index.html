@@ -30,19 +30,23 @@
                         </div>
 
                         <div class="row">
-                            <button class='button' type='submit'>SHORTEN URL</button>
+                            <button class='button' type='submit' ref='addLinkBtn'>SHORTEN URL</button>
                         </div>
                     </form>
 
-                    <div class="response" v-bind:class='createMsg.type' v-if='createMsg' v-cloak>
-                        <span class="message" v-if='createMsg.type === "error" || createMsg.type === "success"'
-                            v-cloak>{{createMsg.msg}}</span>
-                        <span class="message" v-if='createMsg.type === "loading"'>Loading...</span>
+                    <transition v-on:enter="enter" v-on:leave="leave">
+                        <div class="response" v-bind:class='createMsg.type' v-if='createMsg' v-cloak>
+                            <span class="message" v-if='createMsg.type === "error" || createMsg.type === "success"'
+                                v-cloak>{{createMsg.msg}}</span>
+                            <span class="message" v-if='createMsg.type === "loading"'>Loading...</span>
 
-                        <button class="close" @click='closeMessage' v-cloak>
-                            <img class="icon" src="/assets/baseline-close-24px.svg" alt="close">
-                        </button>
-                    </div>
+                            <button class="close" @click='closeMessage' v-cloak>
+                                <img class="icon" src="/assets/baseline-close-24px.svg" alt="close">
+                            </button>
+                        </div>
+                    </transition>
+
+
                 </div>
 
             </div>

@@ -37,13 +37,16 @@
                     </div>
 
                     <div class="row status">
-                        <p v-cloak v-if='error' class="error">{{error}}</p>
-                        <p v-cloak v-if='loading' class="loading">Loading...</p>
-                        <p v-cloak v-if='success' class="success">Success</p>
+                        <transition v-on:enter="enter" v-on:leave="leave">
+                            <p v-cloak v-if='error' class="error">{{error}}</p>
+                            <p v-cloak v-if='loading' class="loading">Loading...</p>
+                            <p v-cloak v-if='success' class="success">Success</p>
+                        </transition>
                     </div>
 
+
                     <div class="row">
-                        <button type="submit" class="button submit">Login</button>
+                        <button type="submit" class="button submit" ref='loginBtn'>Login</button>
                     </div>
 
                     <p><a href="/register" class="link">Register</a></p>

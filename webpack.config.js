@@ -23,7 +23,8 @@ module.exports = (undefined, argv) => {
         },
         resolve: {
             alias: {
-                vue: 'vue/dist/vue.common.js'
+                vue: 'vue/dist/vue.common.js',
+                velocity: 'velocity-animate/velocity.js'
             }
         },
         plugins: [
@@ -31,7 +32,8 @@ module.exports = (undefined, argv) => {
                 'process.env.NODE_ENV': JSON.stringify(argv.dev ? 'development' : 'production'),
             }),
             new webpack.ProvidePlugin({
-                Vue: 'vue'
+                Vue: 'vue',
+                Velocity: 'velocity'
             }),
             new MiniCssExtractPlugin({
                 filename: 'css/main.css',

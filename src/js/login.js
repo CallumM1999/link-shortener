@@ -1,6 +1,10 @@
 import pageHeader from './components/header.js';
 import isEmail from 'validator/lib/isEmail';
 
+import shakeError from './animations/shakeError';
+import fadeIn from './animations/fadeIn';
+import fadeOut from './animations/fadeOut';
+
 new Vue({
     el: '#app',
     components: {pageHeader},
@@ -35,30 +39,39 @@ new Vue({
                         this.success = true;
                         window.location = '/';
                     } else {
-                        if (res.status === 401) return this.error = 'Invalid email or password!';
-                        this.error = 'Oops! Something went wrong.';
+                        if (res.status === 401) return this.displayError('Invalid email or password!');
+                        this.displayError('Oops! Something went wrong.');
                     }
                 }).catch(() => {
                     this.loading = false;
-                    this.error = 'Oops! Something went wrong.';
+                    this.displayError('Oops! Something went wrong.');
                 })
             }
         },
         validateLogin() {
+
             if (!this.email || !this.password) {
-                this.error = `Missing fields!${!this.email? ' email':''}${!this.password ? ' password':''}`;
+                this.displayError(`Missing fields!${!this.email? ' email':''}${!this.password ? ' password':''}`);
                 return;
             }
 
             // validate email
             if (!isEmail(this.email)) {
-                this.error = 'Invalid email!';
+                this.displayError('Invalid email!')
                 return;
             }
 
             this.error = null;
             return true;
-        }
+        },
+        displayError(errorMsg) {
+            this.error = errorMsg;
+            shakeError(this.$refs.loginBtn);
+        },
+
+        // animations
+        enter: fadeIn,
+        leave: fadeOut,
     },
     
 })

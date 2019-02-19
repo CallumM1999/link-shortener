@@ -30,6 +30,11 @@
 
         &.status {
             min-height: 28px;
+
+            > p {
+                // for fadein/out transitions
+                opacity: 0;
+            }
         }
     }
     
