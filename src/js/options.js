@@ -21,6 +21,8 @@ new Vue({
             modalDisable: false,
 
             refreshLoading: false,
+
+            chart: null,
         }
     },
 
@@ -29,6 +31,8 @@ new Vue({
         const linkURL = href.split('/').slice(-1)[0];
 
         this.loadGraph(linkURL);
+
+        this.chart = echarts.init(this.$refs.chart);
 
         window.addEventListener('resize', () => myChart.resize())
     },
@@ -76,7 +80,7 @@ new Vue({
         },
         renderGraph(log) {
             const options = generateFormOptions(log);
-            myChart.setOption(options);
+            this.chart.setOption(options);
         },
 
         handleDelete() {
@@ -134,9 +138,3 @@ new Vue({
     }
     
 })
-
-const myChart = echarts.init(document.querySelector('#chart'));
-
-
-
-

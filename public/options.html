@@ -29,7 +29,7 @@
                     </p>
                     <p class="label" v-cloak>{{link}}</p>
 
-                    <div v-cloak class="status" v-bind:class='{disabled}'>
+                    <div v-cloak class="status">
                         <span>{{disabled ? 'DISABLED' : 'ONLINE'}}</span>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                     </div>
                 </div>
 
-                <div id="chart" class="chart"></div>
+                <div class="chart" ref='chart'></div>
             </div>
         </div>
 

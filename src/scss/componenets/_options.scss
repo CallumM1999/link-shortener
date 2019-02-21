@@ -31,14 +31,11 @@
         left: 20px;
 
         > span {
-            background-color: $color-success;
             padding: 5px;
             border-radius: 5px;
-            font-size: 16px;
-        }
-
-        &.disabled > span {
-            background-color: $color-error
+            font-size: 14px;
+            letter-spacing: 2px;
+            border: 1px solid $color-white-main;
         }
     }
 }

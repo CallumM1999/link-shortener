@@ -59,7 +59,7 @@
                     <input type="text" placeholder="Filter" class="input" v-model='filter'>
                 </div>
                 <div class="right">
-                    <button class="buttongrid" v-bind:class='{selected: (forceGrid || !listDisplayList)}'
+                    <button class="buttongrid" v-bind:class='{selected: !listDisplayList}'
                         @click='toggleListDisplayOption'>
                         <span></span>
                         <span></span>
@@ -67,7 +67,7 @@
                         <span></span>
                     </button>
                     <button class="buttonlist" v-bind:class='{selected: listDisplayList}'
-                        @click='toggleListDisplayOption' v-if='!forceGrid'>
+                        @click='toggleListDisplayOption'>
                         <span></span>
                         <span></span>
                         <span></span>
@@ -78,7 +78,7 @@
                 </div>
             </div>
 
-            <div class="list" v-bind:class='{displayGrid: (forceGrid || !listDisplayList)}'>
+            <div class="list" v-bind:class='{displayGrid: !listDisplayList}'>
 
                 <ul class="table">
                     <li class="row title">
@@ -116,7 +116,7 @@
                                     <span class="text">{{ link.link }}</span>
                                 </li>
                                 <li class="rowcol status" v-bind:class='{disabled : link.disabled == 1}'>
-                                    <span>{{ link.disabled == 1 ? 'Disabled' : 'Enabled' }}</span>
+                                    <span>{{ link.disabled == 1 ? 'Disabled' : 'Online' }}</span>
                                 </li>
                                 <li class="rowcol visits">{{ link.visits }}</li>
                                 <li class="rowcol options">

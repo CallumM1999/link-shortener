@@ -32,17 +32,11 @@ new Vue({
             createInputLink: '',
             createInputLabel: '',
             createMsg: null, // {type: ('error' or 'success'), msg: 'some message'}
-
-            forceGrid: window.innerWidth <= 700 ? true : false,
         }
 
     },
     mounted() {
         console.log('vue mounted')
-
-        window.addEventListener('resize', () => {
-            this.forceGrid = window.innerWidth <= 700 ? true : false;
-        })
 
         fetch('/link', { method: 'GET' })
             .then(response => response.json())
