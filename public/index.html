@@ -79,7 +79,6 @@
             </div>
 
             <div class="list" v-bind:class='{displayGrid: !listDisplayList}'>
-
                 <ul class="table">
                     <li class="row title">
                         <ul class="rowlist-title">
@@ -102,34 +101,40 @@
                         </ul>
                     </li>
 
-                    <li class="row" v-for='link in visibleLinks'>
-                        <div v-cloak style='width:100%;height:100%'>
-                            <ul class="rowlist">
+                    <transition-group
+                        v-on='!listDisplayList ? {} : { beforeEnter: listBeforeEnter, enter: listEnter, leave: listLeave}'
+                        tag='div' class='transition'>
 
-                                <li class="rowcol label">{{ link.label }}</li>
-                                <li class="rowcol url">
-                                    <a :href="'/link/' + link.url" class="url">{{ link.url }}</a>
-                                </li>
+                        <li class="row" v-for='(link, index) in visibleLinks' v-bind:key='link.url' :data-index="index"
+                            v-bind:css="false">
+                            <div v-cloak style='width:100%;height:100%'>
+                                <ul class="rowlist">
 
-                                <li class="rowcol link">
-                                    <img :src='link.icon ? link.icon : "assets/defaultIcon.png"' class="icon">
-                                    <span class="text">{{ link.link }}</span>
-                                </li>
-                                <li class="rowcol status" v-bind:class='{disabled : link.disabled == 1}'>
-                                    <span>{{ link.disabled == 1 ? 'Disabled' : 'Online' }}</span>
-                                </li>
-                                <li class="rowcol visits">{{ link.visits }}</li>
-                                <li class="rowcol options">
-                                    <a :href='"/options/" + link.url' class="options">
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                    </a>
-                                </li>
+                                    <li class="rowcol label">{{ link.label }}</li>
+                                    <li class="rowcol url">
+                                        <a :href="'/link/' + link.url" class="url">{{ link.url }}</a>
+                                    </li>
 
-                            </ul>
-                        </div>
-                    </li>
+                                    <li class="rowcol link">
+                                        <img :src='link.icon ? link.icon : "assets/defaultIcon.png"' class="icon">
+                                        <span class="text">{{ link.link }}</span>
+                                    </li>
+                                    <li class="rowcol status" v-bind:class='{disabled : link.disabled == 1}'>
+                                        <span>{{ link.disabled == 1 ? 'Disabled' : 'Online' }}</span>
+                                    </li>
+                                    <li class="rowcol visits">{{ link.visits }}</li>
+                                    <li class="rowcol options">
+                                        <a :href='"/options/" + link.url' class="options">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </li>
+                    </transition-group>
                 </ul>
 
                 <div class="controls">

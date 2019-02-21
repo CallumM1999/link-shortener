@@ -17,6 +17,10 @@
         display: block;
         &:not(:last-child) { border-bottom: 1px solid $color-border }
         &.title { border: none }
+
+        &:not(.title):hover {
+            background-color: darken($color: $color-white-main, $amount: .9%)
+        }
     }
 
     .rowlist {
@@ -180,13 +184,14 @@
         background-color: transparent;
         padding: 0;
 
-        .table {
+        .transition {
+            width: 100%;
             display: flex;
             flex-wrap: wrap;
-            height: auto;
-            justify-content: center;
-            width: 100%; 
+            justify-content: flex-start;
         }
+
+        .table { height: auto }
 
         .row {
             &.title { display: none }
@@ -194,8 +199,10 @@
             background-color: white;
             border-radius: 3px;
             overflow: hidden;
-            width: 360px;
-            height: 260px;
+            flex-grow: 1;
+            max-width: calc(50% - 20px);
+            min-width: 300px;
+            height: 260px !important; // overwrite animation
             margin: 10px;
             background-color: $color-white-main;
             padding: 16px;
@@ -248,14 +255,24 @@
     }
 }
 
+@media (max-width: 700px) {
+    .list.displayGrid {
+        .transition {
+            justify-content: center;
+        }
+        .row {
+            width: 100%;
+            max-width: 400px;
+        }
+    }
+}
+
 @media (max-width: 600px) {
     .list {
         padding: 10px 20px;
         margin: 0 -10px;
         margin-bottom: 20px;
 
-        .table { height: auto }
-        
         .rowlist {
             > .rowcol {
                 font-size: 14px;
