@@ -5,6 +5,8 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 module.exports = (undefined, argv) => {
     return {
         mode: argv.dev ? 'development' : 'production',
@@ -62,6 +64,13 @@ module.exports = (undefined, argv) => {
                     echarts: {
                         test: /[\\/]node_modules[\\/](echarts|zrender)[\\/]/,
                         name: "echarts",
+                        chunks: 'all',
+                        minSize: 0,
+                        maxInitialRequests: Infinity,
+                    },
+                    velocity: {
+                        test: /[\\/]node_modules[\\/](velocity-animate)[\\/]/,
+                        name: "velocity",
                         chunks: 'all',
                         minSize: 0,
                         maxInitialRequests: Infinity,
