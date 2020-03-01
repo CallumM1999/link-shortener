@@ -1,19 +1,9 @@
 # Link Shortener
 
-This is my current project.
+Link shortener app build with VueJS, ExpressJS and MySQL
 
-It is a recreation of google's depreciated [goo.gl](https://goo.gl/).
+## About
 
+Link Shortener is a NodeJS based app allows you to add long unfriendly URL's, and get a small fiendly link back. 
 
-
-Please visit the heroku link to seee what I have done so far.
-
-
-[Preview](https://salty-ravine-62731.herokuapp.com/preview)
-
-
-[Normal Route](https://salty-ravine-62731.herokuapp.com/)
-
-
-## Todo
-* POST /link url is too specific. node-fetch requires absolute URL. Make it more accepting of misformatted urls.
+The app is built with a NodeJS backend using ExpressJS and MySQL. The frontend is VueJS based, and uses [velocity animate](https://yarnpkg.com/package/velocity-animate) library for JavaScript based animations.
